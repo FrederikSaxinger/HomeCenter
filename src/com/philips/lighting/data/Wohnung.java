@@ -17,7 +17,7 @@ import com.philips.lighting.model.sensor.PHSensor;
 public class Wohnung {
 	ControllerCustom controller;
 
-	private Room flur; //GitHubTest von Eclipse aus
+	private Room flur;
 	private Room badezimmer;
 	private Room wc;
 	private Room schlafzimmer;
