@@ -17,6 +17,13 @@ import com.philips.lighting.data.Wohnung;
 
 public class LightMenuPanel extends JPanel {
 
+	private final int SCALE = 1;
+	private final int FRAME_WIDTH = 480;
+	private final int FRAME_HIGHT = 320;
+	private final int MENU_WIDTH = 60;
+	
+	private final int FIELD_SIZE = 90;
+	
 	private ControllerCustom controller;
 	private Wohnung wohnung;
 
@@ -69,20 +76,21 @@ public class LightMenuPanel extends JPanel {
 
 		g.setFont(new Font("Arial", Font.BOLD, 25));
 
-		if (wohnung.getBadezimmer().lightOn) {
-			g.setColor(aktiv);
-			g.fillRect(50, 50, 225, 225);
-			badezimmerOn.paintIcon(this, g, 87, 100);
-			g.setColor(Color.white);
-			g.drawString("Badezimmer", 80, 80);
-		} else {
-			g.setColor(passiv);
-			g.fillRect(50, 50, 225, 225);
-			badezimmerOff.paintIcon(this, g, 87, 100);
-			g.setColor(Color.black);
-			g.drawString("Badezimmer", 80, 80);
-		}
+//		if (wohnung.getBadezimmer().lightOn) {
+//			g.setColor(aktiv);
+//			g.fillRect(50, 50, 225, 225);
+//			badezimmerOn.paintIcon(this, g, 87, 100);
+//			g.setColor(Color.white);
+//			g.drawString("Badezimmer", 80, 80);
+//		} else {
+//			g.setColor(passiv);
+//			g.fillRect(50, 50, 225, 225);
+//			badezimmerOff.paintIcon(this, g, 87, 100);
+//			g.setColor(Color.black);
+//			g.drawString("Badezimmer", 80, 80);
+//		}
 
+		drawFeld(g, wohnung.getBadezimmer());
 		drawFeld(g, wohnung.getWc());
 		drawFeld(g, wohnung.getSchlafzimmer());
 		drawFeld(g, wohnung.getEingang());
@@ -94,21 +102,21 @@ public class LightMenuPanel extends JPanel {
 	private void drawFeld(Graphics g, Room room) {
 		if (room.lightOn) {
 			g.setColor(aktiv);
-			g.fillRect(room.feld[0], room.feld[1], 225, 225);
+			g.fillRect(room.feld[0], room.feld[1], FIELD_SIZE, FIELD_SIZE);
 			g.setColor(Color.white);
-			g.drawString(room.name, room.feld[0] + 30, room.feld[1] + 30);
+//			g.drawString(room.name, room.feld[0] + 30, room.feld[1] + 30);
 		} else {
 			g.setColor(passiv);
-			g.fillRect(room.feld[0], room.feld[1], 225, 225);
+			g.fillRect(room.feld[0], room.feld[1], FIELD_SIZE, FIELD_SIZE);
 			g.setColor(Color.black);
-			g.drawString(room.name, room.feld[0] + 30, room.feld[1] + 30);
+//			g.drawString(room.name, room.feld[0] + 30, room.feld[1] + 30);
 		}
 
 	}
 
 	private Boolean feldclicked(Point point, Room room) {
-		if (room.feld[0] <= point.getX() && point.getX() <= room.feld[0] + 225 && room.feld[1] <= point.getY()
-				&& point.getY() <= room.feld[1] + 225) {
+		if (room.feld[0] <= point.getX() && point.getX() <= room.feld[0] + FIELD_SIZE && room.feld[1] <= point.getY()
+				&& point.getY() <= room.feld[1] + FIELD_SIZE) {
 			return true;
 		} else {
 			return false;

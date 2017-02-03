@@ -24,8 +24,15 @@ public class HomeCenterFrame extends JFrame {
 
 	StateUpdater stateUpdater;
 
-	private ImageIcon motionSensorIcon;
-	private ImageIcon motionSensorClickedIcon;
+//	private ImageIcon motionSensorIcon;
+//	private ImageIcon motionSensorClickedIcon;
+	
+	private final int SCALE = 1;
+	private final int FRAME_WIDTH = 480*SCALE;
+	private final int FRAME_HIGHT = 320*SCALE;
+	private final int MENU_WIDTH = 60*SCALE;
+	private final int MENU_BUTTON_SIZE = 50*SCALE;
+	private final int MENU_BUTTON_BORDER = 5*SCALE;
 
 	JButton lightMenuButton;
 	JButton sensorMenuButton;
@@ -45,7 +52,7 @@ public class HomeCenterFrame extends JFrame {
 
 		setTitle("Home Center by Frederik Saxinger");
 		menuPanel = new MenuPanel(wohnung);
-		menuPanel.setPreferredSize(new Dimension(1024, 600));
+		menuPanel.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HIGHT));
 
 		// Format stuff
 		Color background = new Color(0, 25, 51, 255);
@@ -53,16 +60,21 @@ public class HomeCenterFrame extends JFrame {
 		menuPanel.setLayout(null);
 		getContentPane().add(menuPanel, BorderLayout.CENTER);
 
+		// initializing light panel
 		lightPanel = new LightMenuPanel(controller, wohnung);
+		lightPanel.setPreferredSize(new Dimension((FRAME_WIDTH-MENU_WIDTH), FRAME_HIGHT));
+		lightPanel.setLocation(MENU_WIDTH, 0);
 		menuPanel.add(lightPanel);
-		lightPanel.setPreferredSize(new Dimension(954, 600));
-		lightPanel.setLocation(70, 0);
+
+		// initializing sensor panel
 		sensorPanel = new SensorMenuPanel();
-		// menuPanel.add(sensorPanel);
-		sensorPanel.setPreferredSize(new Dimension(954, 600));
+		sensorPanel.setPreferredSize(new Dimension((FRAME_WIDTH-MENU_WIDTH), FRAME_HIGHT));
+		sensorPanel.setLocation(MENU_WIDTH, 0);
+		
+		// initializing grundriss panel
 		grundrissPanel = new GrundrissMenuPanel();
-		// menuPanel.add(grundrissPanel);
-		grundrissPanel.setPreferredSize(new Dimension(954, 600));
+		grundrissPanel.setPreferredSize(new Dimension((FRAME_WIDTH-MENU_WIDTH), FRAME_HIGHT));
+		grundrissPanel.setLocation(MENU_WIDTH, 0);
 
 		lightMenuButton = new JButton();
 		sensorMenuButton = new JButton();
@@ -108,11 +120,11 @@ public class HomeCenterFrame extends JFrame {
 
 	private void setUpLightsMenuButton() {
 		lightMenuButton.setSelected(true);
-		ImageIcon birne = new ImageIcon("resources/birne_off.png");
-		ImageIcon birneOff = new ImageIcon("resources/birne.png");
-		lightMenuButton.setIcon(birne);
-		lightMenuButton.setSelectedIcon(birneOff);
-		lightMenuButton.setBounds(5, 55, 60, 60);
+		ImageIcon light_on = new ImageIcon("resources/light_on_50.png");
+		ImageIcon light_off = new ImageIcon("resources/light_off_50.png");
+		lightMenuButton.setIcon(light_off);
+		lightMenuButton.setSelectedIcon(light_on);
+		lightMenuButton.setBounds(MENU_BUTTON_BORDER, MENU_BUTTON_BORDER*3, MENU_BUTTON_SIZE, MENU_BUTTON_SIZE);
 		lightMenuButton.addMouseListener(new MouseListener() {
 
 			@Override
@@ -151,11 +163,11 @@ public class HomeCenterFrame extends JFrame {
 
 	private void setUpSensorsMenuButton() {
 		// TODO on/off name selected...
-		ImageIcon sensor = new ImageIcon("resources/motion_sensor_off.png");
-		ImageIcon sensorOff = new ImageIcon("resources/motion_sensor_on.png");
-		sensorMenuButton.setIcon(sensor);
-		sensorMenuButton.setSelectedIcon(sensorOff);
-		sensorMenuButton.setBounds(5, 155, 60, 60);
+		ImageIcon sensor_off = new ImageIcon("resources/motion_sensor_off_50.png");
+		ImageIcon sensor_on = new ImageIcon("resources/motion_sensor_on_50.png");
+		sensorMenuButton.setIcon(sensor_off);
+		sensorMenuButton.setSelectedIcon(sensor_on);
+		sensorMenuButton.setBounds(MENU_BUTTON_BORDER, (5*MENU_BUTTON_BORDER+MENU_BUTTON_SIZE), MENU_BUTTON_SIZE, MENU_BUTTON_SIZE);
 		sensorMenuButton.addMouseListener(new MouseListener() {
 
 			@Override
@@ -193,11 +205,11 @@ public class HomeCenterFrame extends JFrame {
 	}
 
 	private void setUpGrundrissMenuButton() {
-		ImageIcon switchOn = new ImageIcon("resources/grundriss_on.png");
-		ImageIcon switchOff = new ImageIcon("resources/grundriss_off.png");
-		grundrissMenuButton.setIcon(switchOff);
-		grundrissMenuButton.setSelectedIcon(switchOn);
-		grundrissMenuButton.setBounds(5, 255, 60, 60);
+		ImageIcon grundriss_on = new ImageIcon("resources/grundriss_on_50.png");
+		ImageIcon grundriss_off = new ImageIcon("resources/grundriss_off_50.png");
+		grundrissMenuButton.setIcon(grundriss_off);
+		grundrissMenuButton.setSelectedIcon(grundriss_on);
+		grundrissMenuButton.setBounds(MENU_BUTTON_BORDER, (7*MENU_BUTTON_BORDER+2*MENU_BUTTON_SIZE), MENU_BUTTON_SIZE, MENU_BUTTON_SIZE);
 		grundrissMenuButton.addMouseListener(new MouseListener() {
 
 			@Override

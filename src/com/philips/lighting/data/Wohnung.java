@@ -17,6 +17,11 @@ import com.philips.lighting.model.sensor.PHSensor;
 public class Wohnung {
 	ControllerCustom controller;
 
+	final private int SCALE = 1;
+	final private int FRAME_BORDER = 15*SCALE;
+	final private int FIELD_SIZE = 90*SCALE;
+	final private int FIELD_BORDER = 10*SCALE;
+	
 	private Room flur;
 	private Room badezimmer;
 	private Room wc;
@@ -129,7 +134,7 @@ public class Wohnung {
 		flur.W = 200;
 		flur.H = 70;
 
-		flur.setFeld(350, 50);
+		flur.setFeld(FRAME_BORDER, FRAME_BORDER);
 
 		flur.sensorButtonX = 800;
 		flur.sensorButtonY = 100;
@@ -190,7 +195,7 @@ public class Wohnung {
 		badezimmer.X = flur.X + flur.W - badezimmer.W;
 		badezimmer.Y = flur.Y - badezimmer.H;
 
-		badezimmer.setFeld(50, 50);
+		badezimmer.setFeld(FRAME_BORDER+FIELD_SIZE+FIELD_BORDER, FRAME_BORDER);
 
 		badezimmer.sensorButtonX = flur.sensorButtonX;
 		badezimmer.sensorButtonY = flur.sensorButtonY + sensorButtonAbstand;
@@ -243,7 +248,7 @@ public class Wohnung {
 		wc.X = flur.X;
 		wc.Y = badezimmer.Y + badezimmer.H - wc.H;
 
-		wc.setFeld(350, 325);
+		wc.setFeld(FRAME_BORDER+2*FIELD_SIZE+2*FIELD_BORDER, FRAME_BORDER);
 
 		wc.sensorButtonX = flur.sensorButtonX;
 		wc.sensorButtonY = flur.sensorButtonY + 2 * sensorButtonAbstand;
@@ -293,7 +298,7 @@ public class Wohnung {
 		schlafzimmer.X = flur.X;
 		schlafzimmer.Y = flur.Y + flur.H;
 
-		schlafzimmer.setFeld(50, 325);
+		schlafzimmer.setFeld(FRAME_BORDER+3*FIELD_SIZE+3*FIELD_BORDER, FRAME_BORDER);
 
 		// TODO Button
 	}
@@ -336,7 +341,7 @@ public class Wohnung {
 		eingang.X = kueche.X - eingang.W;
 		eingang.Y = kueche.Y;
 
-		eingang.setFeld(650, 50);
+		eingang.setFeld(FRAME_BORDER, FRAME_BORDER+FIELD_SIZE+FIELD_BORDER);
 
 		eingang.sensorButtonX = flur.sensorButtonX;
 		eingang.sensorButtonY = flur.sensorButtonY + 3 * sensorButtonAbstand;
@@ -387,7 +392,7 @@ public class Wohnung {
 		abstellkammerl.X = wohnzimmer.X;
 		abstellkammerl.Y = kueche.Y;
 
-		abstellkammerl.setFeld(650, 325);
+		abstellkammerl.setFeld(FRAME_BORDER+FIELD_SIZE+FIELD_BORDER, FRAME_BORDER+FIELD_SIZE+FIELD_BORDER);
 
 		// TODO Button
 	}

@@ -16,9 +16,13 @@ import com.philips.lighting.data.Wohnung;
 public class MenuPanel extends JPanel {
 	private ControllerCustom controller;
 
-	// private BufferedImage ambientBirneOff;
-	// private BufferedImage ambientBirneOn;
-
+	private final int SCALE = 1;
+	private final int FRAME_WIDTH = 480*SCALE;
+	private final int FRAME_HIGHT = 320*SCALE;
+	private final int MENU_WIDTH = 60*SCALE;
+	private final int MENU_BUTTON_SIZE = 50*SCALE;
+	private final int MENU_BUTTON_BORDER = 10*SCALE;
+	
 	private Wohnung wohnung;
 
 	public int selected = 1;
@@ -61,10 +65,10 @@ public class MenuPanel extends JPanel {
 		Color backgroud = new Color(0, 25, 51, 255);
 
 		g.setColor(sidebar);
-		g.fillRect(0, 0, 70, 600);
+		g.fillRect(0, 0, MENU_WIDTH, FRAME_HIGHT);
 
 		g.setColor(backgroud);
-		g.fillRect(0, 50 + (selected - 1) * 100, 70, 70);
+		g.fillRect(0, MENU_BUTTON_BORDER + MENU_WIDTH*(selected - 1), MENU_WIDTH, MENU_WIDTH);
 
 		// drawSensorBatterie(wohnung.getFlur(), g);
 		// drawSensorBatterie(wohnung.getBadezimmer(), g);
