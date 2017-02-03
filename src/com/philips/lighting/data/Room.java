@@ -1,11 +1,13 @@
 package com.philips.lighting.data;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import com.philips.lighting.model.PHLight;
 import com.philips.lighting.model.sensor.PHSensor;
 
 public class Room {
+	private final int ICON_SIZE =70;
 	public String name;
 	public int sensorID;
 	public int lightID;
@@ -29,6 +31,15 @@ public class Room {
 
 	private PHSensor sensorCache;
 	private PHLight lightCache;
+	
+	private ImageIcon icon_on;
+	private ImageIcon icon_off;
+
+	public Room(String name) {
+		this.name = name;
+		icon_on = new ImageIcon("resources/" + name + "_on_" + ICON_SIZE + ".png");
+		icon_off = new ImageIcon("resources/" + name + "_off_" + ICON_SIZE + ".png");
+	}
 
 	public PHSensor getSensorCache() {
 		return sensorCache;
@@ -51,4 +62,13 @@ public class Room {
 		feld[0] = x;
 		feld[1] = y;
 	}
+
+	public ImageIcon getIcon_on() {
+		return icon_on;
+	}
+
+	public ImageIcon getIcon_off() {
+		return icon_off;
+	}
+	
 }

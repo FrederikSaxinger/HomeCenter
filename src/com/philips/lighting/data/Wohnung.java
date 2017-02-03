@@ -116,8 +116,7 @@ public class Wohnung {
 	}
 
 	private void initializeFlur() {
-		flur = new Room();
-		flur.name = "Flur";
+		flur = new Room("Flur");
 
 		flur.setSensorCache(sensors.get(3));
 		flur.setLightCache(lights.get(1));
@@ -177,8 +176,7 @@ public class Wohnung {
 	}
 
 	private void initializeBadezimmer() {
-		badezimmer = new Room();
-		badezimmer.name = "Badezimmer";
+		badezimmer = new Room("Badezimmer");
 
 		badezimmer.setSensorCache(sensors.get(15));
 		badezimmer.setLightCache(lights.get(3));
@@ -230,8 +228,7 @@ public class Wohnung {
 	}
 
 	private void initializeWC() {
-		wc = new Room();
-		wc.name = "WC";
+		wc = new Room("WC");
 
 		wc.setSensorCache(sensors.get(12));
 		wc.setLightCache(lights.get(0));
@@ -283,8 +280,7 @@ public class Wohnung {
 	}
 
 	private void initializeSchlafzimmer() {
-		schlafzimmer = new Room();
-		schlafzimmer.name = "Schlafzimmer";
+		schlafzimmer = new Room("Schlafzimmer");
 
 		schlafzimmer.setLightCache(lights.get(2));
 		schlafzimmer.lightIdInCache = 2;
@@ -304,8 +300,7 @@ public class Wohnung {
 	}
 
 	private void initializeWohnzimmer() {
-		wohnzimmer = new Room();
-		wohnzimmer.name = "Wohnzimmer";
+		wohnzimmer = new Room("Wohnzimmer");
 
 		wohnzimmer.W = 270;
 		wohnzimmer.H = flur.H + schlafzimmer.H;
@@ -314,8 +309,7 @@ public class Wohnung {
 	}
 
 	private void initializeKueche() {
-		kueche = new Room();
-		kueche.name = "Kueche";
+		kueche = new Room("Kueche");
 		kueche.W = 100;
 		kueche.H = badezimmer.H;
 		kueche.X = wohnzimmer.X + wohnzimmer.W - kueche.W;
@@ -323,8 +317,7 @@ public class Wohnung {
 	}
 
 	private void initializeEingang() {
-		eingang = new Room();
-		eingang.name = "Eingang";
+		eingang = new Room("Eingang");
 
 		eingang.setSensorCache(sensors.get(7));
 		eingang.setLightCache(lights.get(4));
@@ -377,8 +370,7 @@ public class Wohnung {
 	}
 
 	private void initializeAbstellkammerl() {
-		abstellkammerl = new Room();
-		abstellkammerl.name = "Abstellkammerl";
+		abstellkammerl = new Room("Abstellkammerl");
 
 		abstellkammerl.setLightCache(lights.get(5));
 		abstellkammerl.lightIdInCache = 5;

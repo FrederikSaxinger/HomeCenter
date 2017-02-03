@@ -18,19 +18,18 @@ import com.philips.lighting.data.Wohnung;
 public class LightMenuPanel extends JPanel {
 
 	private final int SCALE = 1;
-	private final int FRAME_WIDTH = 480;
-	private final int FRAME_HIGHT = 320;
-	private final int MENU_WIDTH = 60;
-	
-	private final int FIELD_SIZE = 90;
+	private final int FRAME_WIDTH = 480*SCALE;
+	private final int FRAME_HIGHT = 320*SCALE;
+	private final int MENU_WIDTH = 60*SCALE;
+	private final int FIELD_SIZE = 90*SCALE;
+	private final int ICON_SIZE = 70*SCALE;
+	private final int ICON_BORDER = 10*SCALE;
 	
 	private ControllerCustom controller;
 	private Wohnung wohnung;
 
 	private ImageIcon birne = new ImageIcon("resources/birne_off_button.png");
 	private ImageIcon birneleuchtend = new ImageIcon("resources/birne_on_button.png");
-	private ImageIcon badezimmerOn = new ImageIcon("resources/badezimmer_on.png");
-	private ImageIcon badezimmerOff = new ImageIcon("resources/badezimmer_off.png");
 
 	private Color passiv = new Color(0, 71, 152, 150);
 	private Color aktiv = new Color(0, 100, 200, 150);
@@ -44,9 +43,9 @@ public class LightMenuPanel extends JPanel {
 
 		Color backgroud = new Color(0, 25, 51, 255);
 
-		this.setPreferredSize(new Dimension(924, 600));
+		this.setPreferredSize(new Dimension(FRAME_WIDTH-MENU_WIDTH, FRAME_HIGHT));
 		this.setLayout(null);
-		this.setBounds(100, 0, 924, 600);
+		this.setBounds(MENU_WIDTH, 0, FRAME_WIDTH-MENU_WIDTH, FRAME_HIGHT);
 		this.setBackground(backgroud);
 		addMouseListener(new MouseAdapter() {
 			@Override
@@ -74,7 +73,7 @@ public class LightMenuPanel extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
-		g.setFont(new Font("Arial", Font.BOLD, 25));
+		g.setFont(new Font("Arial", Font.BOLD, 15));
 
 //		if (wohnung.getBadezimmer().lightOn) {
 //			g.setColor(aktiv);
@@ -103,13 +102,11 @@ public class LightMenuPanel extends JPanel {
 		if (room.lightOn) {
 			g.setColor(aktiv);
 			g.fillRect(room.feld[0], room.feld[1], FIELD_SIZE, FIELD_SIZE);
-			g.setColor(Color.white);
-//			g.drawString(room.name, room.feld[0] + 30, room.feld[1] + 30);
+			room.getIcon_on().paintIcon(this, g, room.feld[0]+ICON_BORDER, room.feld[1]+ICON_BORDER);
 		} else {
 			g.setColor(passiv);
 			g.fillRect(room.feld[0], room.feld[1], FIELD_SIZE, FIELD_SIZE);
-			g.setColor(Color.black);
-//			g.drawString(room.name, room.feld[0] + 30, room.feld[1] + 30);
+			room.getIcon_off().paintIcon(this, g, room.feld[0]+ICON_BORDER, room.feld[1]+ICON_BORDER);
 		}
 
 	}
