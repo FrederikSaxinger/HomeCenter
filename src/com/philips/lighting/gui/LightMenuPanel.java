@@ -18,13 +18,13 @@ import com.philips.lighting.data.Wohnung;
 public class LightMenuPanel extends JPanel {
 
 	private final int SCALE = 1;
-	private final int FRAME_WIDTH = 480*SCALE;
-	private final int FRAME_HIGHT = 320*SCALE;
-	private final int MENU_WIDTH = 60*SCALE;
-	private final int FIELD_SIZE = 90*SCALE;
-	private final int ICON_SIZE = 70*SCALE;
-	private final int ICON_BORDER = 10*SCALE;
-	
+	private final int FRAME_WIDTH = 480 * SCALE;
+	private final int FRAME_HIGHT = 320 * SCALE;
+	private final int MENU_WIDTH = 60 * SCALE;
+	private final int FIELD_SIZE = 90 * SCALE;
+	private final int ICON_SIZE = 70 * SCALE;
+	private final int ICON_BORDER = 10 * SCALE;
+
 	private ControllerCustom controller;
 	private Wohnung wohnung;
 
@@ -43,9 +43,9 @@ public class LightMenuPanel extends JPanel {
 
 		Color backgroud = new Color(0, 25, 51, 255);
 
-		this.setPreferredSize(new Dimension(FRAME_WIDTH-MENU_WIDTH, FRAME_HIGHT));
+		this.setPreferredSize(new Dimension(FRAME_WIDTH - MENU_WIDTH, FRAME_HIGHT));
 		this.setLayout(null);
-		this.setBounds(MENU_WIDTH, 0, FRAME_WIDTH-MENU_WIDTH, FRAME_HIGHT);
+		this.setBounds(MENU_WIDTH, 0, FRAME_WIDTH - MENU_WIDTH, FRAME_HIGHT);
 		this.setBackground(backgroud);
 		addMouseListener(new MouseAdapter() {
 			@Override
@@ -75,19 +75,19 @@ public class LightMenuPanel extends JPanel {
 
 		g.setFont(new Font("Arial", Font.BOLD, 15));
 
-//		if (wohnung.getBadezimmer().lightOn) {
-//			g.setColor(aktiv);
-//			g.fillRect(50, 50, 225, 225);
-//			badezimmerOn.paintIcon(this, g, 87, 100);
-//			g.setColor(Color.white);
-//			g.drawString("Badezimmer", 80, 80);
-//		} else {
-//			g.setColor(passiv);
-//			g.fillRect(50, 50, 225, 225);
-//			badezimmerOff.paintIcon(this, g, 87, 100);
-//			g.setColor(Color.black);
-//			g.drawString("Badezimmer", 80, 80);
-//		}
+		// if (wohnung.getBadezimmer().lightOn) {
+		// g.setColor(aktiv);
+		// g.fillRect(50, 50, 225, 225);
+		// badezimmerOn.paintIcon(this, g, 87, 100);
+		// g.setColor(Color.white);
+		// g.drawString("Badezimmer", 80, 80);
+		// } else {
+		// g.setColor(passiv);
+		// g.fillRect(50, 50, 225, 225);
+		// badezimmerOff.paintIcon(this, g, 87, 100);
+		// g.setColor(Color.black);
+		// g.drawString("Badezimmer", 80, 80);
+		// }
 
 		drawFeld(g, wohnung.getBadezimmer());
 		drawFeld(g, wohnung.getWc());
@@ -102,11 +102,11 @@ public class LightMenuPanel extends JPanel {
 		if (room.lightOn) {
 			g.setColor(aktiv);
 			g.fillRect(room.feld[0], room.feld[1], FIELD_SIZE, FIELD_SIZE);
-			room.getIcon_on().paintIcon(this, g, room.feld[0]+ICON_BORDER, room.feld[1]+ICON_BORDER);
+			room.getIcon_on().paintIcon(this, g, room.feld[0] + ICON_BORDER, room.feld[1] + ICON_BORDER);
 		} else {
 			g.setColor(passiv);
 			g.fillRect(room.feld[0], room.feld[1], FIELD_SIZE, FIELD_SIZE);
-			room.getIcon_off().paintIcon(this, g, room.feld[0]+ICON_BORDER, room.feld[1]+ICON_BORDER);
+			room.getIcon_off().paintIcon(this, g, room.feld[0] + ICON_BORDER, room.feld[1] + ICON_BORDER);
 		}
 
 	}

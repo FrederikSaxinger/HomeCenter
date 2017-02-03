@@ -377,7 +377,7 @@ public class Wohnung {
 
 		abstellkammerl.lightOn = abstellkammerl.getLightCache().getLastKnownLightState().isOn();
 
-		abstellkammerl.lightID = 3;
+		abstellkammerl.lightID = 6;
 
 		abstellkammerl.W = wohnzimmer.W - kueche.W - eingang.W;
 		abstellkammerl.H = kueche.H;

@@ -2,12 +2,14 @@ package com.philips.lighting;
 
 import com.philips.lighting.data.HueProperties;
 import com.philips.lighting.data.Room;
+import com.philips.lighting.gui.LightMenuPanel;
 import com.philips.lighting.hue.listener.PHHTTPListener;
 import com.philips.lighting.hue.sdk.PHHueSDK;
 import com.philips.lighting.model.PHBridge;
 import com.philips.lighting.model.PHBridgeResourcesCache;
 
 public class ControllerCustom {
+	private LightMenuPanel lightPanel;
 
 	private PHHueSDK phHueSDK;
 	private static final int MAX_HUE = 65535;
@@ -22,6 +24,8 @@ public class ControllerCustom {
 	public ControllerCustom() {
 		this.phHueSDK = PHHueSDK.getInstance();
 		this.instance = this;
+		
+		this.lightPanel = null;
 
 		bridge = phHueSDK.getSelectedBridge();
 		cache = bridge.getResourceCache();
@@ -62,13 +66,13 @@ public class ControllerCustom {
 
 			@Override
 			public void onHTTPResponse(String jsonResponse) {
-				System.out.println(room.name + " RESPONSE : " + jsonResponse);
+//				System.out.println(room.name + " RESPONSE : " + jsonResponse);
+				room.lightOn = true;
+				lightPanel.repaint();
 			}
 		};
 
 		bridge.doHTTPPut(url, json, switchListener);
-
-		room.lightOn = true;
 	}
 
 	public void switchOffLight(Room room) {
@@ -79,13 +83,13 @@ public class ControllerCustom {
 
 			@Override
 			public void onHTTPResponse(String jsonResponse) {
-				System.out.println(room.name + " RESPONSE : " + jsonResponse);
+//				System.out.println(room.name + " RESPONSE : " + jsonResponse);
+				room.lightOn = false;
+				lightPanel.repaint();
 			}
 		};
 
 		bridge.doHTTPPut(url, json, switchListener);
-
-		room.lightOn = false;
 	}
 
 	public void switchLight(Room room) {
@@ -100,5 +104,10 @@ public class ControllerCustom {
 	public PHBridgeResourcesCache getCache() {
 		return cache;
 	}
+
+	public void setLightPanel(LightMenuPanel lightPanel) {
+		this.lightPanel = lightPanel;
+	}
+	
 
 }
