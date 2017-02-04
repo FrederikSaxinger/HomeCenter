@@ -27,7 +27,7 @@ public class HomeCenterFrame extends JFrame {
 	private MenuPanel menuPanel;
 	private ControllerCustom controller;
 
-	StateUpdater stateUpdater;
+	private StateUpdater stateUpdater;
 
 	// private ImageIcon motionSensorIcon;
 	// private ImageIcon motionSensorClickedIcon;
@@ -64,6 +64,8 @@ public class HomeCenterFrame extends JFrame {
 		menuPanel.setBackground(background);
 		menuPanel.setLayout(null);
 		getContentPane().add(menuPanel, BorderLayout.CENTER);
+
+		stateUpdater = new StateUpdater(wohnung, menuPanel);
 
 		// initializing light panel
 		lightPanel = new LightMenuPanel(controller, wohnung);
@@ -106,8 +108,8 @@ public class HomeCenterFrame extends JFrame {
 		// 4. Size the frame.
 		pack();
 		if (raspberry) {
-			setLocation(0, -30);
 			setExtendedState(JFrame.MAXIMIZED_BOTH);
+			setLocation(0, -30);
 
 			// set mouse cursor
 			BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
@@ -120,9 +122,6 @@ public class HomeCenterFrame extends JFrame {
 		}
 
 		setVisible(true);
-
-		stateUpdater = new StateUpdater(wohnung, menuPanel);
-
 	}
 
 	private void setUpMenuButton(JButton button) {

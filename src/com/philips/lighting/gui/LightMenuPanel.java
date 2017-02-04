@@ -14,9 +14,11 @@ import javax.swing.border.Border;
 
 import com.philips.lighting.ControllerCustom;
 import com.philips.lighting.data.Room;
+import com.philips.lighting.data.StateUpdater;
 import com.philips.lighting.data.Wohnung;
 
 public class LightMenuPanel extends JPanel {
+	private final Boolean raspberry = false;
 
 	private final int SCALE = 1;
 	private final int FRAME_WIDTH = 480 * SCALE;
@@ -28,6 +30,7 @@ public class LightMenuPanel extends JPanel {
 
 	private ControllerCustom controller;
 	private Wohnung wohnung;
+	private StateUpdater stateUpdater;
 
 	private Border emptyBorder;
 
@@ -38,41 +41,22 @@ public class LightMenuPanel extends JPanel {
 	private Color blaugrau2 = new Color(55, 90, 118, 255);
 
 	private JButton button1;
+	private JButton button2;
+	private JButton button3;
+	private JButton button4;
+	private JButton button5;
+	private JButton button6;
 
 	public LightMenuPanel(ControllerCustom controller, Wohnung wohnung) {
 		this.controller = controller;
 		this.wohnung = wohnung;
 
-		button1 = new JButton();
-		button1.setBounds(wohnung.getFlur().fieldCoord.x, wohnung.getFlur().fieldCoord.y, FIELD_SIZE, FIELD_SIZE);
-		button1.setContentAreaFilled(false);
-		button1.setBorder(emptyBorder);
-		button1.setFocusable(false);
-		button1.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				controller.switchLight(wohnung.getFlur());
-				repaint();
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
-		add(button1);
+		initializeButton(button1, wohnung.getFlur());
+		initializeButton(button2, wohnung.getBadezimmer());
+		initializeButton(button3, wohnung.getSchlafzimmer());
+		initializeButton(button4, wohnung.getEingang());
+		initializeButton(button5, wohnung.getWc());
+		initializeButton(button6, wohnung.getAbstellkammerl());
 
 		Color backgroud = new Color(0, 25, 51, 255);
 
@@ -80,26 +64,6 @@ public class LightMenuPanel extends JPanel {
 		this.setLayout(null);
 		this.setBounds(MENU_WIDTH, 0, FRAME_WIDTH - MENU_WIDTH, FRAME_HIGHT);
 		this.setBackground(backgroud);
-		// addMouseListener(new MouseAdapter() {
-		// @Override
-		// public void mouseClicked(MouseEvent me) {
-		// Point point = me.getPoint();
-		// if (feldclicked(point, wohnung.getBadezimmer())) {
-		// controller.switchLight(wohnung.getBadezimmer());
-		// } else if (feldclicked(point, wohnung.getFlur())) {
-		// controller.switchLight(wohnung.getFlur());
-		// } else if (feldclicked(point, wohnung.getWc())) {
-		// controller.switchLight(wohnung.getWc());
-		// } else if (feldclicked(point, wohnung.getSchlafzimmer())) {
-		// controller.switchLight(wohnung.getSchlafzimmer());
-		// } else if (feldclicked(point, wohnung.getEingang())) {
-		// controller.switchLight(wohnung.getEingang());
-		// } else if (feldclicked(point, wohnung.getAbstellkammerl())) {
-		// controller.switchLight(wohnung.getAbstellkammerl());
-		// }
-		// repaint();
-		// }
-		// });
 	}
 
 	@Override
@@ -141,4 +105,42 @@ public class LightMenuPanel extends JPanel {
 		}
 	}
 
+	private void initializeButton(JButton button, Room room) {
+		button = new JButton();
+		button.setBounds(room.fieldCoord.x, room.fieldCoord.y, FIELD_SIZE, FIELD_SIZE);
+		button.setContentAreaFilled(false);
+		button.setBorder(emptyBorder);
+		button.setFocusable(false);
+		button.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				if (raspberry) {
+					controller.switchLight(room);
+					repaint();
+				}
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (!raspberry) {
+					controller.switchLight(room);
+					repaint();
+				}
+			}
+		});
+		add(button);
+	}
 }

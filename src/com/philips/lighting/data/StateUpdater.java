@@ -22,7 +22,7 @@ public class StateUpdater {
 	private List<PHLight> lights;
 	private List<PHSensor> sensors;
 
-	public StateUpdater(Wohnung wohnung, MenuPanel grundrissPanel) {
+	public StateUpdater(Wohnung wohnung, MenuPanel menuPanel) {
 		this.wohnung = wohnung;
 		this.cache = PHHueSDK.getInstance().getSelectedBridge().getResourceCache();
 
@@ -36,14 +36,14 @@ public class StateUpdater {
 
 				updateLightsOn();
 				updateSensorsOn();
-				grundrissPanel.repaint();
+				menuPanel.repaint();
 			}
 		};
 
 		timer.schedule(updater, 0, 1000 * SECONDS);
 	}
 
-	private void updateLightsOn() {
+	public void updateLightsOn() {
 		wohnung.getFlur().light.lightOn = lights.get(wohnung.getFlur().light.cacheId).getLastKnownLightState().isOn();
 		wohnung.getWc().light.lightOn = lights.get(wohnung.getWc().light.cacheId).getLastKnownLightState().isOn();
 		wohnung.getBadezimmer().light.lightOn = lights.get(wohnung.getBadezimmer().light.cacheId)
@@ -56,7 +56,7 @@ public class StateUpdater {
 				.getLastKnownLightState().isOn();
 	}
 
-	private void updateSensorsOn() {
+	public void updateSensorsOn() {
 		wohnung.getFlur().sensor.sensorOn = sensors.get(wohnung.getFlur().sensor.cacheId).getBaseConfiguration()
 				.getOn();
 		wohnung.getBadezimmer().sensor.sensorOn = sensors.get(wohnung.getBadezimmer().sensor.cacheId)

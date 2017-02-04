@@ -60,7 +60,7 @@ public class ControllerCustom {
 
 	public void switchOnLight(Room room) {
 		String url = "http://" + bridgeIP + "/api/" + username + "/lights/" + room.light.lightId + "/state";
-		String json = "{\"on\": true}";
+		String json = "{\"on\": true, \"bri\": 254}";
 
 		PHHTTPListener switchListener = new PHHTTPListener() {
 
