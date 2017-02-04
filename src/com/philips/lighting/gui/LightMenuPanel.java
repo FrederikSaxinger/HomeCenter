@@ -5,11 +5,12 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 import com.philips.lighting.ControllerCustom;
 import com.philips.lighting.data.Room;
@@ -28,8 +29,7 @@ public class LightMenuPanel extends JPanel {
 	private ControllerCustom controller;
 	private Wohnung wohnung;
 
-	private ImageIcon birne = new ImageIcon("resources/birne_off_button.png");
-	private ImageIcon birneleuchtend = new ImageIcon("resources/birne_on_button.png");
+	private Border emptyBorder;
 
 	private Color passiv = new Color(0, 71, 152, 150);
 	private Color aktiv = new Color(0, 100, 200, 150);
@@ -37,9 +37,42 @@ public class LightMenuPanel extends JPanel {
 	private Color blaugrau = new Color(102, 143, 175, 100);
 	private Color blaugrau2 = new Color(55, 90, 118, 255);
 
+	private JButton button1;
+
 	public LightMenuPanel(ControllerCustom controller, Wohnung wohnung) {
 		this.controller = controller;
 		this.wohnung = wohnung;
+
+		button1 = new JButton();
+		button1.setBounds(wohnung.getFlur().fieldCoord.x, wohnung.getFlur().fieldCoord.y, FIELD_SIZE, FIELD_SIZE);
+		button1.setContentAreaFilled(false);
+		button1.setBorder(emptyBorder);
+		button1.setFocusable(false);
+		button1.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				controller.switchLight(wohnung.getFlur());
+				repaint();
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+		});
+		add(button1);
 
 		Color backgroud = new Color(0, 25, 51, 255);
 
@@ -47,26 +80,26 @@ public class LightMenuPanel extends JPanel {
 		this.setLayout(null);
 		this.setBounds(MENU_WIDTH, 0, FRAME_WIDTH - MENU_WIDTH, FRAME_HIGHT);
 		this.setBackground(backgroud);
-		addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent me) {
-				Point point = me.getPoint();
-				if (feldclicked(point, wohnung.getBadezimmer())) {
-					controller.switchLight(wohnung.getBadezimmer());
-				} else if (feldclicked(point, wohnung.getFlur())) {
-					controller.switchLight(wohnung.getFlur());
-				} else if (feldclicked(point, wohnung.getWc())) {
-					controller.switchLight(wohnung.getWc());
-				} else if (feldclicked(point, wohnung.getSchlafzimmer())) {
-					controller.switchLight(wohnung.getSchlafzimmer());
-				} else if (feldclicked(point, wohnung.getEingang())) {
-					controller.switchLight(wohnung.getEingang());
-				} else if (feldclicked(point, wohnung.getAbstellkammerl())) {
-					controller.switchLight(wohnung.getAbstellkammerl());
-				}
-				repaint();
-			}
-		});
+		// addMouseListener(new MouseAdapter() {
+		// @Override
+		// public void mouseClicked(MouseEvent me) {
+		// Point point = me.getPoint();
+		// if (feldclicked(point, wohnung.getBadezimmer())) {
+		// controller.switchLight(wohnung.getBadezimmer());
+		// } else if (feldclicked(point, wohnung.getFlur())) {
+		// controller.switchLight(wohnung.getFlur());
+		// } else if (feldclicked(point, wohnung.getWc())) {
+		// controller.switchLight(wohnung.getWc());
+		// } else if (feldclicked(point, wohnung.getSchlafzimmer())) {
+		// controller.switchLight(wohnung.getSchlafzimmer());
+		// } else if (feldclicked(point, wohnung.getEingang())) {
+		// controller.switchLight(wohnung.getEingang());
+		// } else if (feldclicked(point, wohnung.getAbstellkammerl())) {
+		// controller.switchLight(wohnung.getAbstellkammerl());
+		// }
+		// repaint();
+		// }
+		// });
 	}
 
 	@Override
@@ -74,20 +107,6 @@ public class LightMenuPanel extends JPanel {
 		super.paintComponent(g);
 
 		g.setFont(new Font("Arial", Font.BOLD, 15));
-
-		// if (wohnung.getBadezimmer().lightOn) {
-		// g.setColor(aktiv);
-		// g.fillRect(50, 50, 225, 225);
-		// badezimmerOn.paintIcon(this, g, 87, 100);
-		// g.setColor(Color.white);
-		// g.drawString("Badezimmer", 80, 80);
-		// } else {
-		// g.setColor(passiv);
-		// g.fillRect(50, 50, 225, 225);
-		// badezimmerOff.paintIcon(this, g, 87, 100);
-		// g.setColor(Color.black);
-		// g.drawString("Badezimmer", 80, 80);
-		// }
 
 		drawFeld(g, wohnung.getBadezimmer());
 		drawFeld(g, wohnung.getWc());
