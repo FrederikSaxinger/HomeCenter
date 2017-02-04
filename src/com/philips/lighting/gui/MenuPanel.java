@@ -17,12 +17,12 @@ public class MenuPanel extends JPanel {
 	private ControllerCustom controller;
 
 	private final int SCALE = 1;
-	private final int FRAME_WIDTH = 480*SCALE;
-	private final int FRAME_HIGHT = 320*SCALE;
-	private final int MENU_WIDTH = 60*SCALE;
-	private final int MENU_BUTTON_SIZE = 50*SCALE;
-	private final int MENU_BUTTON_BORDER = 10*SCALE;
-	
+	private final int FRAME_WIDTH = 480 * SCALE;
+	private final int FRAME_HIGHT = 320 * SCALE;
+	private final int MENU_WIDTH = 60 * SCALE;
+	private final int MENU_BUTTON_SIZE = 50 * SCALE;
+	private final int MENU_BUTTON_BORDER = 10 * SCALE;
+
 	private Wohnung wohnung;
 
 	public int selected = 1;
@@ -68,7 +68,7 @@ public class MenuPanel extends JPanel {
 		g.fillRect(0, 0, MENU_WIDTH, FRAME_HIGHT);
 
 		g.setColor(backgroud);
-		g.fillRect(0, MENU_BUTTON_BORDER + MENU_WIDTH*(selected - 1), MENU_WIDTH, MENU_WIDTH);
+		g.fillRect(0, MENU_BUTTON_BORDER + MENU_WIDTH * (selected - 1), MENU_WIDTH, MENU_WIDTH);
 
 		// drawSensorBatterie(wohnung.getFlur(), g);
 		// drawSensorBatterie(wohnung.getBadezimmer(), g);
@@ -100,7 +100,7 @@ public class MenuPanel extends JPanel {
 	}
 
 	private void drawRoom(Room room, Graphics g) {
-		if (room.lightOn) {
+		if (room.light.lightOn) {
 			g.setColor(Color.white);
 			g.fillRect(room.X, room.Y, room.W, room.H);
 			// g.drawImage(ambientBirneOn, room.X + 210, room.Y + 110, 55, 55,
@@ -112,8 +112,8 @@ public class MenuPanel extends JPanel {
 			// null);
 		}
 
-		if (room.sensorOn != null) {
-			room.sensorButton.setSelected(!room.sensorOn);
+		if (room.sensor.sensorOn != null) {
+			room.sensorButton.setSelected(!room.sensor.sensorOn);
 		}
 	}
 
@@ -138,16 +138,16 @@ public class MenuPanel extends JPanel {
 		g.fillRect(x + 4, y - 4, 4, 4);
 
 		g.setColor(Color.green);
-		if (room.sensorBattery > 10) {
+		if (room.sensor.battery > 10) {
 			g.fillRect(x + 2, y + 20, 9, 5);
 		}
-		if (room.sensorBattery > 25) {
+		if (room.sensor.battery > 25) {
 			g.fillRect(x + 2, y + 14, 9, 5);
 		}
-		if (room.sensorBattery > 50) {
+		if (room.sensor.battery > 50) {
 			g.fillRect(x + 2, y + 8, 9, 5);
 		}
-		if (room.sensorBattery > 75) {
+		if (room.sensor.battery > 75) {
 			g.fillRect(x + 2, y + 2, 9, 5);
 		}
 	}

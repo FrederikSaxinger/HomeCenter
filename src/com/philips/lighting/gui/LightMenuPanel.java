@@ -99,21 +99,23 @@ public class LightMenuPanel extends JPanel {
 	}
 
 	private void drawFeld(Graphics g, Room room) {
-		if (room.lightOn) {
+		if (room.light.lightOn) {
 			g.setColor(aktiv);
-			g.fillRect(room.feld[0], room.feld[1], FIELD_SIZE, FIELD_SIZE);
-			room.getIcon_on().paintIcon(this, g, room.feld[0] + ICON_BORDER, room.feld[1] + ICON_BORDER);
+			g.fillRect((int) room.fieldCoord.getX(), (int) room.fieldCoord.getY(), FIELD_SIZE, FIELD_SIZE);
+			room.getIcon_on().paintIcon(this, g, (int) room.fieldCoord.getX() + ICON_BORDER,
+					(int) room.fieldCoord.getY() + ICON_BORDER);
 		} else {
 			g.setColor(passiv);
-			g.fillRect(room.feld[0], room.feld[1], FIELD_SIZE, FIELD_SIZE);
-			room.getIcon_off().paintIcon(this, g, room.feld[0] + ICON_BORDER, room.feld[1] + ICON_BORDER);
+			g.fillRect((int) room.fieldCoord.getX(), (int) room.fieldCoord.getY(), FIELD_SIZE, FIELD_SIZE);
+			room.getIcon_off().paintIcon(this, g, (int) room.fieldCoord.getX() + ICON_BORDER,
+					(int) room.fieldCoord.getY() + ICON_BORDER);
 		}
 
 	}
 
 	private Boolean feldclicked(Point point, Room room) {
-		if (room.feld[0] <= point.getX() && point.getX() <= room.feld[0] + FIELD_SIZE && room.feld[1] <= point.getY()
-				&& point.getY() <= room.feld[1] + FIELD_SIZE) {
+		if (room.fieldCoord.getX() <= point.getX() && point.getX() <= room.fieldCoord.getX() + FIELD_SIZE
+				&& room.fieldCoord.getY() <= point.getY() && point.getY() <= room.fieldCoord.getY() + FIELD_SIZE) {
 			return true;
 		} else {
 			return false;

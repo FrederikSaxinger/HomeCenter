@@ -24,7 +24,7 @@ public class ControllerCustom {
 	public ControllerCustom() {
 		this.phHueSDK = PHHueSDK.getInstance();
 		this.instance = this;
-		
+
 		this.lightPanel = null;
 
 		bridge = phHueSDK.getSelectedBridge();
@@ -36,9 +36,9 @@ public class ControllerCustom {
 	}
 
 	public void switchSensorState(Room room) {
-		String url = "http://" + bridgeIP + "/api/" + username + "/sensors/" + room.sensorID;
+		String url = "http://" + bridgeIP + "/api/" + username + "/sensors/" + room.sensor.sensorId;
 
-		String json = "{\"on\": " + !room.sensorOn + "}";
+		String json = "{\"on\": " + !room.sensor.sensorOn + "}";
 		bridge.doHTTPPut(url + "/config", json, new PHHTTPListener() {
 
 			@Override
@@ -47,9 +47,9 @@ public class ControllerCustom {
 			}
 		});
 
-		room.sensorOn = !room.sensorOn;
+		room.sensor.sensorOn = !room.sensor.sensorOn;
 
-		if (room.sensorOn) {
+		if (room.sensor.sensorOn) {
 			switchOffLight(room);
 			room.sensorButton.setSelected(false);
 		} else {
@@ -59,15 +59,16 @@ public class ControllerCustom {
 	}
 
 	public void switchOnLight(Room room) {
-		String url = "http://" + bridgeIP + "/api/" + username + "/lights/" + room.lightID + "/state";
+		String url = "http://" + bridgeIP + "/api/" + username + "/lights/" + room.light.lightId + "/state";
 		String json = "{\"on\": true}";
 
 		PHHTTPListener switchListener = new PHHTTPListener() {
 
 			@Override
 			public void onHTTPResponse(String jsonResponse) {
-//				System.out.println(room.name + " RESPONSE : " + jsonResponse);
-				room.lightOn = true;
+				// System.out.println(room.name + " RESPONSE : " +
+				// jsonResponse);
+				room.light.lightOn = true;
 				lightPanel.repaint();
 			}
 		};
@@ -76,15 +77,16 @@ public class ControllerCustom {
 	}
 
 	public void switchOffLight(Room room) {
-		String url = "http://" + bridgeIP + "/api/" + username + "/lights/" + room.lightID + "/state";
+		String url = "http://" + bridgeIP + "/api/" + username + "/lights/" + room.light.lightId + "/state";
 		String json = "{\"on\": false}";
 
 		PHHTTPListener switchListener = new PHHTTPListener() {
 
 			@Override
 			public void onHTTPResponse(String jsonResponse) {
-//				System.out.println(room.name + " RESPONSE : " + jsonResponse);
-				room.lightOn = false;
+				// System.out.println(room.name + " RESPONSE : " +
+				// jsonResponse);
+				room.light.lightOn = false;
 				lightPanel.repaint();
 			}
 		};
@@ -93,7 +95,7 @@ public class ControllerCustom {
 	}
 
 	public void switchLight(Room room) {
-		boolean on = room.lightOn;
+		boolean on = room.light.lightOn;
 		if (on) {
 			switchOffLight(room);
 		} else {
@@ -108,6 +110,5 @@ public class ControllerCustom {
 	public void setLightPanel(LightMenuPanel lightPanel) {
 		this.lightPanel = lightPanel;
 	}
-	
 
 }

@@ -18,10 +18,10 @@ public class Wohnung {
 	ControllerCustom controller;
 
 	final private int SCALE = 1;
-	final private int FRAME_BORDER = 15*SCALE;
-	final private int FIELD_SIZE = 90*SCALE;
-	final private int FIELD_BORDER = 10*SCALE;
-	
+	final private int FRAME_BORDER = 15 * SCALE;
+	final private int FIELD_SIZE = 90 * SCALE;
+	final private int FIELD_BORDER = 10 * SCALE;
+
 	private Room flur;
 	private Room badezimmer;
 	private Room wc;
@@ -80,7 +80,7 @@ public class Wohnung {
 	}
 
 	public void switchLightOnState(Room room) {
-		room.lightOn = !room.lightOn;
+		room.light.lightOn = !room.light.lightOn;
 	}
 
 	public Room getFlur() {
@@ -117,17 +117,9 @@ public class Wohnung {
 
 	private void initializeFlur() {
 		flur = new Room("Flur");
+		flur.light = new Light(lights, 1, 2);
+		flur.sensor = new Sensor(sensors, 3, 13);
 
-		flur.setSensorCache(sensors.get(3));
-		flur.setLightCache(lights.get(1));
-		flur.sensorIdInCache = 3;
-		flur.lightIdInCache = 1;
-
-		flur.sensorID = 13;
-		flur.lightID = 2;
-		flur.sensorBattery = flur.getSensorCache().getBaseConfiguration().getBattery();
-		flur.sensorOn = flur.getSensorCache().getBaseConfiguration().getOn();
-		flur.lightOn = flur.getLightCache().getLastKnownLightState().isOn();
 		flur.X = masterX + 400;
 		flur.Y = masterY + 200;
 		flur.W = 200;
@@ -138,7 +130,7 @@ public class Wohnung {
 		flur.sensorButtonX = 800;
 		flur.sensorButtonY = 100;
 		flur.sensorButton = new JButton();
-		flur.sensorButton.setSelected(!flur.sensorOn);
+		flur.sensorButton.setSelected(!flur.sensor.sensorOn);
 		initializeSensorButton(flur.sensorButton);
 		flur.sensorButton.setBounds(flur.sensorButtonX, flur.sensorButtonY, sensorButtonWidth, sensorButtonWidth);
 		flur.sensorButton.removeMouseListener(flur.sensorButton.getMouseListeners()[0]);
@@ -177,23 +169,15 @@ public class Wohnung {
 
 	private void initializeBadezimmer() {
 		badezimmer = new Room("Badezimmer");
+		badezimmer.light = new Light(lights, 3, 4);
+		badezimmer.sensor = new Sensor(sensors, 15, 9);
 
-		badezimmer.setSensorCache(sensors.get(15));
-		badezimmer.setLightCache(lights.get(3));
-		badezimmer.sensorIdInCache = 15;
-		badezimmer.lightIdInCache = 3;
-
-		badezimmer.sensorID = 9;
-		badezimmer.lightID = 4;
-		badezimmer.sensorBattery = badezimmer.getSensorCache().getBaseConfiguration().getBattery();
-		badezimmer.sensorOn = badezimmer.getSensorCache().getBaseConfiguration().getOn();
-		badezimmer.lightOn = badezimmer.getLightCache().getLastKnownLightState().isOn();
 		badezimmer.W = 125;
 		badezimmer.H = 125;
 		badezimmer.X = flur.X + flur.W - badezimmer.W;
 		badezimmer.Y = flur.Y - badezimmer.H;
 
-		badezimmer.setFeld(FRAME_BORDER+FIELD_SIZE+FIELD_BORDER, FRAME_BORDER);
+		badezimmer.setFeld(FRAME_BORDER + FIELD_SIZE + FIELD_BORDER, FRAME_BORDER);
 
 		badezimmer.sensorButtonX = flur.sensorButtonX;
 		badezimmer.sensorButtonY = flur.sensorButtonY + sensorButtonAbstand;
@@ -229,23 +213,15 @@ public class Wohnung {
 
 	private void initializeWC() {
 		wc = new Room("WC");
+		wc.light = new Light(lights, 0, 1);
+		wc.sensor = new Sensor(sensors, 12, 5);
 
-		wc.setSensorCache(sensors.get(12));
-		wc.setLightCache(lights.get(0));
-		wc.sensorIdInCache = 12;
-		wc.lightIdInCache = 0;
-
-		wc.sensorID = 5;
-		wc.lightID = 1;
-		wc.sensorBattery = wc.getSensorCache().getBaseConfiguration().getBattery();
-		wc.sensorOn = wc.getSensorCache().getBaseConfiguration().getOn();
-		wc.lightOn = wc.getLightCache().getLastKnownLightState().isOn();
 		wc.W = flur.W - badezimmer.W;
 		wc.H = 75;
 		wc.X = flur.X;
 		wc.Y = badezimmer.Y + badezimmer.H - wc.H;
 
-		wc.setFeld(FRAME_BORDER+2*FIELD_SIZE+2*FIELD_BORDER, FRAME_BORDER);
+		wc.setFeld(FRAME_BORDER + 2 * FIELD_SIZE + 2 * FIELD_BORDER, FRAME_BORDER);
 
 		wc.sensorButtonX = flur.sensorButtonX;
 		wc.sensorButtonY = flur.sensorButtonY + 2 * sensorButtonAbstand;
@@ -281,20 +257,14 @@ public class Wohnung {
 
 	private void initializeSchlafzimmer() {
 		schlafzimmer = new Room("Schlafzimmer");
-
-		schlafzimmer.setLightCache(lights.get(2));
-		schlafzimmer.lightIdInCache = 2;
-
-		schlafzimmer.lightOn = schlafzimmer.getLightCache().getLastKnownLightState().isOn();
-
-		schlafzimmer.lightID = 3;
+		schlafzimmer.light = new Light(lights, 2, 3);
 
 		schlafzimmer.W = flur.W;
 		schlafzimmer.H = 150;
 		schlafzimmer.X = flur.X;
 		schlafzimmer.Y = flur.Y + flur.H;
 
-		schlafzimmer.setFeld(FRAME_BORDER+3*FIELD_SIZE+3*FIELD_BORDER, FRAME_BORDER);
+		schlafzimmer.setFeld(FRAME_BORDER + 3 * FIELD_SIZE + 3 * FIELD_BORDER, FRAME_BORDER);
 
 		// TODO Button
 	}
@@ -318,23 +288,15 @@ public class Wohnung {
 
 	private void initializeEingang() {
 		eingang = new Room("Eingang");
+		eingang.light = new Light(lights, 4, 5);
+		eingang.sensor = new Sensor(sensors, 7, 18);
 
-		eingang.setSensorCache(sensors.get(7));
-		eingang.setLightCache(lights.get(4));
-		eingang.sensorIdInCache = 7;
-		eingang.lightIdInCache = 4;
-
-		eingang.sensorID = 18;
-		eingang.lightID = 5;
-		eingang.sensorBattery = eingang.getSensorCache().getBaseConfiguration().getBattery();
-		eingang.sensorOn = eingang.getSensorCache().getBaseConfiguration().getOn();
-		eingang.lightOn = eingang.getLightCache().getLastKnownLightState().isOn();
 		eingang.W = 100;
 		eingang.H = kueche.H;
 		eingang.X = kueche.X - eingang.W;
 		eingang.Y = kueche.Y;
 
-		eingang.setFeld(FRAME_BORDER, FRAME_BORDER+FIELD_SIZE+FIELD_BORDER);
+		eingang.setFeld(FRAME_BORDER, FRAME_BORDER + FIELD_SIZE + FIELD_BORDER);
 
 		eingang.sensorButtonX = flur.sensorButtonX;
 		eingang.sensorButtonY = flur.sensorButtonY + 3 * sensorButtonAbstand;
@@ -371,20 +333,14 @@ public class Wohnung {
 
 	private void initializeAbstellkammerl() {
 		abstellkammerl = new Room("Abstellkammerl");
-
-		abstellkammerl.setLightCache(lights.get(5));
-		abstellkammerl.lightIdInCache = 5;
-
-		abstellkammerl.lightOn = abstellkammerl.getLightCache().getLastKnownLightState().isOn();
-
-		abstellkammerl.lightID = 6;
+		abstellkammerl.light = new Light(lights, 5, 6);
 
 		abstellkammerl.W = wohnzimmer.W - kueche.W - eingang.W;
 		abstellkammerl.H = kueche.H;
 		abstellkammerl.X = wohnzimmer.X;
 		abstellkammerl.Y = kueche.Y;
 
-		abstellkammerl.setFeld(FRAME_BORDER+FIELD_SIZE+FIELD_BORDER, FRAME_BORDER+FIELD_SIZE+FIELD_BORDER);
+		abstellkammerl.setFeld(FRAME_BORDER + FIELD_SIZE + FIELD_BORDER, FRAME_BORDER + FIELD_SIZE + FIELD_BORDER);
 
 		// TODO Button
 	}

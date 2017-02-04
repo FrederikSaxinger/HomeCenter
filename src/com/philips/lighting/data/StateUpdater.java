@@ -44,23 +44,25 @@ public class StateUpdater {
 	}
 
 	private void updateLightsOn() {
-		wohnung.getFlur().lightOn = lights.get(wohnung.getFlur().lightIdInCache).getLastKnownLightState().isOn();
-		wohnung.getWc().lightOn = lights.get(wohnung.getWc().lightIdInCache).getLastKnownLightState().isOn();
-		wohnung.getBadezimmer().lightOn = lights.get(wohnung.getBadezimmer().lightIdInCache).getLastKnownLightState()
-				.isOn();
-		wohnung.getEingang().lightOn = lights.get(wohnung.getEingang().lightIdInCache).getLastKnownLightState().isOn();
-		wohnung.getAbstellkammerl().lightOn = lights.get(wohnung.getAbstellkammerl().lightIdInCache)
+		wohnung.getFlur().light.lightOn = lights.get(wohnung.getFlur().light.cacheId).getLastKnownLightState().isOn();
+		wohnung.getWc().light.lightOn = lights.get(wohnung.getWc().light.cacheId).getLastKnownLightState().isOn();
+		wohnung.getBadezimmer().light.lightOn = lights.get(wohnung.getBadezimmer().light.cacheId)
 				.getLastKnownLightState().isOn();
-		wohnung.getSchlafzimmer().lightOn = lights.get(wohnung.getSchlafzimmer().lightIdInCache)
+		wohnung.getEingang().light.lightOn = lights.get(wohnung.getEingang().light.cacheId).getLastKnownLightState()
+				.isOn();
+		wohnung.getAbstellkammerl().light.lightOn = lights.get(wohnung.getAbstellkammerl().light.cacheId)
+				.getLastKnownLightState().isOn();
+		wohnung.getSchlafzimmer().light.lightOn = lights.get(wohnung.getSchlafzimmer().light.cacheId)
 				.getLastKnownLightState().isOn();
 	}
 
 	private void updateSensorsOn() {
-		wohnung.getFlur().sensorOn = sensors.get(wohnung.getFlur().sensorIdInCache).getBaseConfiguration().getOn();
-		wohnung.getBadezimmer().sensorOn = sensors.get(wohnung.getBadezimmer().sensorIdInCache).getBaseConfiguration()
+		wohnung.getFlur().sensor.sensorOn = sensors.get(wohnung.getFlur().sensor.cacheId).getBaseConfiguration()
 				.getOn();
-		wohnung.getWc().sensorOn = sensors.get(wohnung.getWc().sensorIdInCache).getBaseConfiguration().getOn();
-		wohnung.getEingang().sensorOn = sensors.get(wohnung.getEingang().sensorIdInCache).getBaseConfiguration()
+		wohnung.getBadezimmer().sensor.sensorOn = sensors.get(wohnung.getBadezimmer().sensor.cacheId)
+				.getBaseConfiguration().getOn();
+		wohnung.getWc().sensor.sensorOn = sensors.get(wohnung.getWc().sensor.cacheId).getBaseConfiguration().getOn();
+		wohnung.getEingang().sensor.sensorOn = sensors.get(wohnung.getEingang().sensor.cacheId).getBaseConfiguration()
 				.getOn();
 	}
 }
