@@ -69,6 +69,7 @@ public class ControllerCustom {
 				// System.out.println(room.name + " RESPONSE : " +
 				// jsonResponse);
 				room.light.lightOn = true;
+				System.out.println("light on");
 				lightPanel.repaint();
 			}
 		};
@@ -87,6 +88,7 @@ public class ControllerCustom {
 				// System.out.println(room.name + " RESPONSE : " +
 				// jsonResponse);
 				room.light.lightOn = false;
+				System.out.println("light off");
 				lightPanel.repaint();
 			}
 		};

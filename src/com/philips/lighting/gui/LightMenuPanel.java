@@ -27,6 +27,8 @@ public class LightMenuPanel extends JPanel {
 	private final int FIELD_SIZE = 90 * SCALE;
 	private final int ICON_SIZE = 70 * SCALE;
 	private final int ICON_BORDER = 10 * SCALE;
+	final private int FIELD_BORDER = 10 * SCALE;
+	final private int FRAME_BORDER = 15 * SCALE;
 
 	private ControllerCustom controller;
 	private Wohnung wohnung;
@@ -47,9 +49,17 @@ public class LightMenuPanel extends JPanel {
 	private JButton button5;
 	private JButton button6;
 
+	private int focus;
+	private JPanel reglerPanel;
+
 	public LightMenuPanel(ControllerCustom controller, Wohnung wohnung) {
 		this.controller = controller;
 		this.wohnung = wohnung;
+
+		this.setPreferredSize(new Dimension(FRAME_WIDTH - MENU_WIDTH, FRAME_HIGHT));
+		this.setLayout(null);
+		this.setBounds(MENU_WIDTH, 0, FRAME_WIDTH - MENU_WIDTH, FRAME_HIGHT);
+		this.setBackground(background);
 
 		initializeButton(button1, wohnung.getFlur());
 		initializeButton(button2, wohnung.getBadezimmer());
@@ -58,12 +68,11 @@ public class LightMenuPanel extends JPanel {
 		initializeButton(button5, wohnung.getWc());
 		initializeButton(button6, wohnung.getAbstellkammerl());
 
-		Color backgroud = new Color(0, 25, 51, 255);
-
-		this.setPreferredSize(new Dimension(FRAME_WIDTH - MENU_WIDTH, FRAME_HIGHT));
-		this.setLayout(null);
-		this.setBounds(MENU_WIDTH, 0, FRAME_WIDTH - MENU_WIDTH, FRAME_HIGHT);
-		this.setBackground(backgroud);
+		reglerPanel = new JPanel();
+		reglerPanel.setBackground(passiv);
+		reglerPanel.setBounds(FRAME_BORDER, FRAME_BORDER + 2 * FIELD_BORDER + 2 * FIELD_SIZE,
+				4 * FIELD_SIZE + 3 * FIELD_BORDER, FIELD_SIZE);
+		add(reglerPanel);
 	}
 
 	@Override
