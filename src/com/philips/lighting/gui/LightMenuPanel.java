@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -49,7 +48,8 @@ public class LightMenuPanel extends JPanel {
 	private JButton button5;
 	private JButton button6;
 
-	private int focus;
+	private int brightness;
+	private Room focus = null;
 	private JPanel reglerPanel;
 
 	public LightMenuPanel(ControllerCustom controller, Wohnung wohnung) {
@@ -69,9 +69,35 @@ public class LightMenuPanel extends JPanel {
 		initializeButton(button6, wohnung.getAbstellkammerl());
 
 		reglerPanel = new JPanel();
-		reglerPanel.setBackground(passiv);
-		reglerPanel.setBounds(FRAME_BORDER, FRAME_BORDER + 2 * FIELD_BORDER + 2 * FIELD_SIZE,
+		// reglerPanel.setBackground(passiv);
+		reglerPanel.setBounds(FRAME_BORDER, FRAME_BORDER + 1 * FIELD_BORDER + 1 * FIELD_SIZE,
 				4 * FIELD_SIZE + 3 * FIELD_BORDER, FIELD_SIZE);
+		reglerPanel.setOpaque(false);
+		reglerPanel.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (focus != null) {
+					brightness = e.getX();
+					repaint();
+				}
+			}
+		});
 		add(reglerPanel);
 	}
 
@@ -88,6 +114,19 @@ public class LightMenuPanel extends JPanel {
 		drawFeld(g, wohnung.getAbstellkammerl());
 		drawFeld(g, wohnung.getFlur());
 
+		if (focus != null) {
+			g.setColor(aktiv);
+			g.fillRect(FRAME_BORDER, 2 * FRAME_BORDER + 1 * FIELD_SIZE + 1 * FIELD_BORDER,
+					4 * FIELD_SIZE + 3 * FIELD_BORDER, FIELD_SIZE - 2 * FRAME_BORDER);
+			g.fillRect(focus.fieldCoord.x, focus.fieldCoord.y + FIELD_SIZE, FIELD_SIZE, FIELD_BORDER + FRAME_BORDER);
+			g.setColor(Color.WHITE);
+			g.fillRect(FRAME_BORDER + ICON_BORDER, 2 * FRAME_BORDER + 1 * FIELD_SIZE + 1 * FIELD_BORDER + ICON_BORDER,
+					brightness, FIELD_SIZE - 2 * ICON_BORDER - 2 * FRAME_BORDER);
+		} else {
+			g.setColor(passiv);
+			g.fillRect(FRAME_BORDER, 2 * FRAME_BORDER + 1 * FIELD_SIZE + 1 * FIELD_BORDER,
+					4 * FIELD_SIZE + 3 * FIELD_BORDER, FIELD_SIZE - 2 * FRAME_BORDER);
+		}
 	}
 
 	private void drawFeld(Graphics g, Room room) {
@@ -103,15 +142,6 @@ public class LightMenuPanel extends JPanel {
 					(int) room.fieldCoord.getY() + ICON_BORDER);
 		}
 
-	}
-
-	private Boolean feldclicked(Point point, Room room) {
-		if (room.fieldCoord.getX() <= point.getX() && point.getX() <= room.fieldCoord.getX() + FIELD_SIZE
-				&& room.fieldCoord.getY() <= point.getY() && point.getY() <= room.fieldCoord.getY() + FIELD_SIZE) {
-			return true;
-		} else {
-			return false;
-		}
 	}
 
 	private void initializeButton(JButton button, Room room) {
@@ -137,16 +167,28 @@ public class LightMenuPanel extends JPanel {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				if (raspberry) {
+					if (room.light.lightOn == true) {
+						focus = null;
+					} else {
+						focus = room;
+					}
 					controller.switchLight(room);
 					repaint();
+
 				}
 			}
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (!raspberry) {
+					if (room.light.lightOn == true) {
+						focus = null;
+					} else {
+						focus = room;
+					}
 					controller.switchLight(room);
 					repaint();
+
 				}
 			}
 		});

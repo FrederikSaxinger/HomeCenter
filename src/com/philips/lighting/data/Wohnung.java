@@ -296,7 +296,7 @@ public class Wohnung {
 		eingang.X = kueche.X - eingang.W;
 		eingang.Y = kueche.Y;
 
-		eingang.setFeld(FRAME_BORDER, FRAME_BORDER + FIELD_SIZE + FIELD_BORDER);
+		eingang.setFeld(FRAME_BORDER, FRAME_BORDER + 2 * FIELD_SIZE + 2 * FIELD_BORDER);
 
 		eingang.sensorButtonX = flur.sensorButtonX;
 		eingang.sensorButtonY = flur.sensorButtonY + 3 * sensorButtonAbstand;
@@ -340,7 +340,8 @@ public class Wohnung {
 		abstellkammerl.X = wohnzimmer.X;
 		abstellkammerl.Y = kueche.Y;
 
-		abstellkammerl.setFeld(FRAME_BORDER + FIELD_SIZE + FIELD_BORDER, FRAME_BORDER + FIELD_SIZE + FIELD_BORDER);
+		abstellkammerl.setFeld(FRAME_BORDER + FIELD_SIZE + FIELD_BORDER,
+				FRAME_BORDER + 2 * FIELD_SIZE + 2 * FIELD_BORDER);
 
 		// TODO Button
 	}

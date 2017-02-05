@@ -16,7 +16,6 @@ import javax.swing.JTextField;
 
 import com.philips.lighting.Controller;
 import com.philips.lighting.ControllerCustom;
-import com.philips.lighting.data.HueProperties;
 import com.philips.lighting.data.Wohnung;
 
 import layout.TableLayout;
@@ -56,8 +55,10 @@ public class DesktopView extends JFrame {
 		findingBridgeProgressBar.setVisible(false);
 
 		// Set up components preferred size
-		String lastUsername = HueProperties.getUsername();
-		String lastConnectedIPStr = HueProperties.getLastConnectedIP();
+		// String lastUsername = HueProperties.getUsername();
+		// String lastConnectedIPStr = HueProperties.getLastConnectedIP();
+		String lastUsername = "G0p3mmup0EkBfW9x8KiO7HZRR0I2FHrs7XAEmS9q";
+		String lastConnectedIPStr = "192.168.0.27";
 
 		JLabel labelLastConIP = new JLabel("Last Connected IP:");
 		lastConnectedIP = new JTextField(lastConnectedIPStr);
@@ -161,7 +162,6 @@ public class DesktopView extends JFrame {
 		pack();
 		setLocationRelativeTo(null); // Centre the window.
 		setVisible(true);
-
 	}
 
 	public void setController(Controller controller) {

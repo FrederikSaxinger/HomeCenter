@@ -51,6 +51,8 @@ public class HomeCenterFrame extends JFrame {
 
 	public HomeCenterFrame(Wohnung wohnung) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setUndecorated(true);
+		setResizable(false);
 
 		this.wohnung = wohnung;
 		this.controller = wohnung.getController();
@@ -118,7 +120,7 @@ public class HomeCenterFrame extends JFrame {
 			getContentPane().setCursor(blankCursor);
 		} else {
 			setLocationRelativeTo(null); // Centre the window.
-
+			setAlwaysOnTop(true);
 		}
 
 		setVisible(true);

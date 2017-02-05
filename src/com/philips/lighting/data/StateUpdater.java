@@ -22,6 +22,8 @@ public class StateUpdater {
 	private List<PHLight> lights;
 	private List<PHSensor> sensors;
 
+	private Boolean newstate;
+
 	public StateUpdater(Wohnung wohnung, MenuPanel menuPanel) {
 		this.wohnung = wohnung;
 		this.cache = PHHueSDK.getInstance().getSelectedBridge().getResourceCache();

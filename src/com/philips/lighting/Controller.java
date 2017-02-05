@@ -6,8 +6,10 @@ import java.util.Random;
 import javax.swing.JDialog;
 
 import com.philips.lighting.data.HueProperties;
+import com.philips.lighting.data.Wohnung;
 import com.philips.lighting.gui.AccessPointList;
 import com.philips.lighting.gui.DesktopView;
+import com.philips.lighting.gui.HomeCenterFrame;
 import com.philips.lighting.gui.LightColoursFrame;
 import com.philips.lighting.gui.PushLinkFrame;
 import com.philips.lighting.hue.sdk.PHAccessPoint;
@@ -93,6 +95,11 @@ public class Controller {
 			desktopView.getRandomLightsButton().setEnabled(true);
 			desktopView.getSetLightsButton().setEnabled(true);
 			desktopView.getGrundrissButton().setEnabled(true);
+			// dies starten den custom frame automatisch bei aktiver verbindung
+			ControllerCustom controllerCostum = new ControllerCustom();
+			Wohnung wohnung = new Wohnung(controllerCostum);
+			HomeCenterFrame grundrissFrame = new HomeCenterFrame(wohnung);
+			grundrissFrame.getMenuPanel().setController(controllerCostum);
 		}
 
 		@Override

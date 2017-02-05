@@ -24,8 +24,9 @@ class HueDesktop {
 	public HueDesktop() {
 		PHHueSDK phHueSDK = PHHueSDK.create();
 
-		HueProperties.loadProperties(); // Load in HueProperties, if first time
-										// use a properties file is created.
+		HueProperties.loadProperties(); // Load in HueProperties, if first
+		// time
+		// use a properties file is created.
 
 		HueProperties.storeUsername("G0p3mmup0EkBfW9x8KiO7HZRR0I2FHrs7XAEmS9q");
 		HueProperties.storeLastIPAddress("192.168.0.27");
@@ -38,6 +39,10 @@ class HueDesktop {
 		desktopView.setController(controller);
 
 		phHueSDK.getNotificationManager().registerSDKListener(controller.getListener());
+
+		// hinzugefügt um ummittelbar mit mit der bridge zu verbinden und den
+		// custom frame zu starten
+		controller.connectToLastKnownAccessPoint();
 	}
 
 }

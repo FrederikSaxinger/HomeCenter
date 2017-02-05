@@ -90,6 +90,7 @@ public class ControllerCustom {
 				room.light.lightOn = false;
 				System.out.println("light off");
 				lightPanel.repaint();
+				bridge.updateLight(room.light.phlight, null);
 			}
 		};
 
