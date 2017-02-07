@@ -1,5 +1,7 @@
 package com.philips.lighting;
 
+import org.json.hue.JSONObject;
+
 import com.philips.lighting.data.HueProperties;
 import com.philips.lighting.data.Room;
 import com.philips.lighting.gui.LightMenuPanel;
@@ -104,6 +106,24 @@ public class ControllerCustom {
 		} else {
 			switchOnLight(room);
 		}
+	}
+
+	public void getLightState(Room room) {
+		String url = "http://" + bridgeIP + "/api/" + username + "/lights/" + room.light.lightId;
+
+		PHHTTPListener switchListener = new PHHTTPListener() {
+			@Override
+			public void onHTTPResponse(String jsonResponse) {
+				JSONObject object = new JSONObject(jsonResponse);
+				object = object.getJSONObject("state");
+				Boolean lightstate = object.get("on").toString() == "true";
+				room.light.lightOn = lightstate;
+				lightPanel.repaint();
+				System.out.println("GUI updaten - Verursacher: " + room.name);
+			}
+		};
+
+		bridge.doHTTPGet(url, switchListener);
 	}
 
 	public PHBridgeResourcesCache getCache() {

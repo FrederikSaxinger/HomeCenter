@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 import com.philips.lighting.ControllerCustom;
+import com.philips.lighting.data.Constants;
 import com.philips.lighting.data.Room;
 import com.philips.lighting.data.StateUpdater;
 import com.philips.lighting.data.Wohnung;
@@ -19,15 +20,16 @@ import com.philips.lighting.data.Wohnung;
 public class LightMenuPanel extends JPanel {
 	private final Boolean raspberry = false;
 
-	private final int SCALE = 1;
-	private final int FRAME_WIDTH = 480 * SCALE;
-	private final int FRAME_HIGHT = 320 * SCALE;
-	private final int MENU_WIDTH = 60 * SCALE;
-	private final int FIELD_SIZE = 90 * SCALE;
-	private final int ICON_SIZE = 70 * SCALE;
-	private final int ICON_BORDER = 10 * SCALE;
-	final private int FIELD_BORDER = 10 * SCALE;
-	final private int FRAME_BORDER = 15 * SCALE;
+	private final int FRAME_WIDTH = Constants.FRAME_WIDTH;
+	private final int FRAME_HIGHT = Constants.FRAME_HIGHT;
+	private final int MENU_WIDTH = Constants.MENU_WIDTH;
+	private final int FIELD_SIZE = Constants.FIELD_SIZE;
+	private final int ICON_SIZE = Constants.ICON_SIZE;
+	private final int ICON_BORDER = Constants.ICON_BORDER;
+	final private int FIELD_BORDER_VERTICAL = Constants.FIELD_BORDER_VERTICAL;
+	final private int FRAME_BORDER_VERTICAL = Constants.FRAME_BORDER_VERTICAL;
+	final private int FRAME_BORDER_HORIZONTAL = Constants.FRAME_BORDER_HORIZONTAL;
+	final private int FIELD_BORDER_HORIZONTAL = Constants.FIELD_BORDER_HORIZONTAL;
 
 	private ControllerCustom controller;
 	private Wohnung wohnung;
@@ -70,8 +72,9 @@ public class LightMenuPanel extends JPanel {
 
 		reglerPanel = new JPanel();
 		// reglerPanel.setBackground(passiv);
-		reglerPanel.setBounds(FRAME_BORDER, FRAME_BORDER + 1 * FIELD_BORDER + 1 * FIELD_SIZE,
-				4 * FIELD_SIZE + 3 * FIELD_BORDER, FIELD_SIZE);
+		reglerPanel.setBounds(FRAME_BORDER_HORIZONTAL,
+				FRAME_BORDER_VERTICAL + 1 * FIELD_BORDER_VERTICAL + 1 * FIELD_SIZE,
+				3 * FIELD_SIZE + 2 * FIELD_BORDER_HORIZONTAL, FIELD_SIZE);
 		reglerPanel.setOpaque(false);
 		reglerPanel.addMouseListener(new MouseListener() {
 			@Override
@@ -116,16 +119,22 @@ public class LightMenuPanel extends JPanel {
 
 		if (focus != null) {
 			g.setColor(aktiv);
-			g.fillRect(FRAME_BORDER, 2 * FRAME_BORDER + 1 * FIELD_SIZE + 1 * FIELD_BORDER,
-					4 * FIELD_SIZE + 3 * FIELD_BORDER, FIELD_SIZE - 2 * FRAME_BORDER);
-			g.fillRect(focus.fieldCoord.x, focus.fieldCoord.y + FIELD_SIZE, FIELD_SIZE, FIELD_BORDER + FRAME_BORDER);
+			g.fillRect(FRAME_BORDER_HORIZONTAL, 2 * FRAME_BORDER_VERTICAL + 1 * FIELD_SIZE + 1 * FIELD_BORDER_VERTICAL,
+					3 * FIELD_SIZE + 2 * FIELD_BORDER_HORIZONTAL, FIELD_SIZE - 2 * FRAME_BORDER_VERTICAL);
+			g.fillRect(focus.fieldCoord.x, focus.fieldCoord.y + FIELD_SIZE, FIELD_SIZE,
+					FIELD_BORDER_VERTICAL + FRAME_BORDER_VERTICAL);
 			g.setColor(Color.WHITE);
-			g.fillRect(FRAME_BORDER + ICON_BORDER, 2 * FRAME_BORDER + 1 * FIELD_SIZE + 1 * FIELD_BORDER + ICON_BORDER,
-					brightness, FIELD_SIZE - 2 * ICON_BORDER - 2 * FRAME_BORDER);
+			// g.fillRect(FRAME_BORDER_HORIZONTAL + ICON_BORDER,
+			// 2 * FRAME_BORDER_VERTICAL + 1 * FIELD_SIZE + 1 *
+			// FIELD_BORDER_VERTICAL + ICON_BORDER, (brightness),
+			// FIELD_SIZE - 2 * ICON_BORDER - 2 * FRAME_BORDER_VERTICAL);
+			g.fillRect(FRAME_BORDER_HORIZONTAL,
+					2 * FRAME_BORDER_VERTICAL + 1 * FIELD_SIZE + 1 * FIELD_BORDER_VERTICAL + ICON_BORDER, (brightness),
+					FIELD_SIZE - 2 * ICON_BORDER - 2 * FRAME_BORDER_VERTICAL);
 		} else {
 			g.setColor(passiv);
-			g.fillRect(FRAME_BORDER, 2 * FRAME_BORDER + 1 * FIELD_SIZE + 1 * FIELD_BORDER,
-					4 * FIELD_SIZE + 3 * FIELD_BORDER, FIELD_SIZE - 2 * FRAME_BORDER);
+			g.fillRect(FRAME_BORDER_HORIZONTAL, 2 * FRAME_BORDER_VERTICAL + 1 * FIELD_SIZE + 1 * FIELD_BORDER_VERTICAL,
+					3 * FIELD_SIZE + 2 * FIELD_BORDER_HORIZONTAL, FIELD_SIZE - 2 * FRAME_BORDER_VERTICAL);
 		}
 	}
 

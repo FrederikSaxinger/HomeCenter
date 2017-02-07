@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class Room {
-	private final int ICON_SIZE = 70;
+	private final int ICON_SIZE = Constants.ICON_SIZE;
 	public String name;
 	public Light light;
 	public Sensor sensor;

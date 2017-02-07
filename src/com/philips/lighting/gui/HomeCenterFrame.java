@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.border.Border;
 
 import com.philips.lighting.ControllerCustom;
+import com.philips.lighting.data.Constants;
 import com.philips.lighting.data.StateUpdater;
 import com.philips.lighting.data.Wohnung;
 
@@ -32,12 +33,11 @@ public class HomeCenterFrame extends JFrame {
 	// private ImageIcon motionSensorIcon;
 	// private ImageIcon motionSensorClickedIcon;
 
-	private final int SCALE = 1;
-	private final int FRAME_WIDTH = 480 * SCALE;
-	private final int FRAME_HIGHT = 320 * SCALE;
-	private final int MENU_WIDTH = 60 * SCALE;
-	private final int MENU_BUTTON_SIZE = 50 * SCALE;
-	private final int MENU_BUTTON_BORDER = 5 * SCALE;
+	private final int FRAME_WIDTH = Constants.FRAME_WIDTH;
+	private final int FRAME_HIGHT = Constants.FRAME_HIGHT;
+	private final int MENU_WIDTH = Constants.MENU_WIDTH;
+	private final int MENU_BUTTON_SIZE = Constants.MENU_BUTTON_SIZE;
+	private final int MENU_BUTTON_BORDER = Constants.MENU_BUTTON_BORDER;
 
 	JButton lightMenuButton;
 	JButton sensorMenuButton;
@@ -66,8 +66,6 @@ public class HomeCenterFrame extends JFrame {
 		menuPanel.setBackground(background);
 		menuPanel.setLayout(null);
 		getContentPane().add(menuPanel, BorderLayout.CENTER);
-
-		stateUpdater = new StateUpdater(wohnung, menuPanel);
 
 		// initializing light panel
 		lightPanel = new LightMenuPanel(controller, wohnung);
@@ -124,6 +122,8 @@ public class HomeCenterFrame extends JFrame {
 		}
 
 		setVisible(true);
+
+		stateUpdater = new StateUpdater(controller, wohnung, menuPanel);
 	}
 
 	private void setUpMenuButton(JButton button) {

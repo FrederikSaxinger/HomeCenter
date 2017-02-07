@@ -17,10 +17,11 @@ import com.philips.lighting.model.sensor.PHSensor;
 public class Wohnung {
 	ControllerCustom controller;
 
-	final private int SCALE = 1;
-	final private int FRAME_BORDER = 15 * SCALE;
-	final private int FIELD_SIZE = 90 * SCALE;
-	final private int FIELD_BORDER = 10 * SCALE;
+	final private int FRAME_BORDER_VERTICAL = Constants.FRAME_BORDER_VERTICAL;
+	final private int FRAME_BORDER_HORIZONTAL = Constants.FRAME_BORDER_HORIZONTAL;
+	final private int FIELD_SIZE = Constants.FIELD_SIZE;
+	final private int FIELD_BORDER_VERTIACAL = Constants.FIELD_BORDER_VERTICAL;
+	final private int FIELD_BORDER_HORIZONTAL = Constants.FIELD_BORDER_HORIZONTAL;
 
 	private Room flur;
 	private Room badezimmer;
@@ -125,7 +126,7 @@ public class Wohnung {
 		flur.W = 200;
 		flur.H = 70;
 
-		flur.setFeld(FRAME_BORDER, FRAME_BORDER);
+		flur.setFeld(FRAME_BORDER_HORIZONTAL, FRAME_BORDER_VERTICAL);
 
 		flur.sensorButtonX = 800;
 		flur.sensorButtonY = 100;
@@ -177,7 +178,7 @@ public class Wohnung {
 		badezimmer.X = flur.X + flur.W - badezimmer.W;
 		badezimmer.Y = flur.Y - badezimmer.H;
 
-		badezimmer.setFeld(FRAME_BORDER + FIELD_SIZE + FIELD_BORDER, FRAME_BORDER);
+		badezimmer.setFeld(FRAME_BORDER_HORIZONTAL + FIELD_SIZE + FIELD_BORDER_HORIZONTAL, FRAME_BORDER_VERTICAL);
 
 		badezimmer.sensorButtonX = flur.sensorButtonX;
 		badezimmer.sensorButtonY = flur.sensorButtonY + sensorButtonAbstand;
@@ -221,7 +222,7 @@ public class Wohnung {
 		wc.X = flur.X;
 		wc.Y = badezimmer.Y + badezimmer.H - wc.H;
 
-		wc.setFeld(FRAME_BORDER + 2 * FIELD_SIZE + 2 * FIELD_BORDER, FRAME_BORDER);
+		wc.setFeld(FRAME_BORDER_HORIZONTAL, FRAME_BORDER_VERTICAL + 2 * FIELD_SIZE + 2 * FIELD_BORDER_VERTIACAL);
 
 		wc.sensorButtonX = flur.sensorButtonX;
 		wc.sensorButtonY = flur.sensorButtonY + 2 * sensorButtonAbstand;
@@ -264,7 +265,8 @@ public class Wohnung {
 		schlafzimmer.X = flur.X;
 		schlafzimmer.Y = flur.Y + flur.H;
 
-		schlafzimmer.setFeld(FRAME_BORDER + 3 * FIELD_SIZE + 3 * FIELD_BORDER, FRAME_BORDER);
+		schlafzimmer.setFeld(FRAME_BORDER_HORIZONTAL + 2 * FIELD_SIZE + 2 * FIELD_BORDER_HORIZONTAL,
+				FRAME_BORDER_VERTICAL);
 
 		// TODO Button
 	}
@@ -296,7 +298,8 @@ public class Wohnung {
 		eingang.X = kueche.X - eingang.W;
 		eingang.Y = kueche.Y;
 
-		eingang.setFeld(FRAME_BORDER, FRAME_BORDER + 2 * FIELD_SIZE + 2 * FIELD_BORDER);
+		eingang.setFeld(FRAME_BORDER_HORIZONTAL + FIELD_SIZE + FIELD_BORDER_HORIZONTAL,
+				FRAME_BORDER_VERTICAL + 2 * FIELD_SIZE + 2 * FIELD_BORDER_VERTIACAL);
 
 		eingang.sensorButtonX = flur.sensorButtonX;
 		eingang.sensorButtonY = flur.sensorButtonY + 3 * sensorButtonAbstand;
@@ -340,8 +343,8 @@ public class Wohnung {
 		abstellkammerl.X = wohnzimmer.X;
 		abstellkammerl.Y = kueche.Y;
 
-		abstellkammerl.setFeld(FRAME_BORDER + FIELD_SIZE + FIELD_BORDER,
-				FRAME_BORDER + 2 * FIELD_SIZE + 2 * FIELD_BORDER);
+		abstellkammerl.setFeld(FRAME_BORDER_HORIZONTAL + 2 * FIELD_SIZE + 2 * FIELD_BORDER_HORIZONTAL,
+				FRAME_BORDER_VERTICAL + 2 * FIELD_SIZE + 2 * FIELD_BORDER_VERTIACAL);
 
 		// TODO Button
 	}

@@ -77,7 +77,8 @@ public class Controller {
 		public void onBridgeConnected(PHBridge bridge, String username) {
 			phHueSDK.setSelectedBridge(bridge);
 			// TODO appheartbeat schreiben um cache state zu verteilen
-			phHueSDK.enableHeartbeat(bridge, PHHueSDK.HB_INTERVAL);
+			// phHueSDK.enableHeartbeat(bridge, PHHueSDK.HB_INTERVAL);
+			phHueSDK.enableHeartbeat(bridge, 13000);
 			// TODO nur bestimmte heartbeat verwenden
 			desktopView.getFindingBridgeProgressBar().setVisible(false);
 			String lastIpAddress = bridge.getResourceCache().getBridgeConfiguration().getIpAddress();

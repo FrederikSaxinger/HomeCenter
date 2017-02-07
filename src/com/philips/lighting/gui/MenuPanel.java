@@ -10,18 +10,18 @@ import java.awt.geom.Line2D;
 import javax.swing.JPanel;
 
 import com.philips.lighting.ControllerCustom;
+import com.philips.lighting.data.Constants;
 import com.philips.lighting.data.Room;
 import com.philips.lighting.data.Wohnung;
 
 public class MenuPanel extends JPanel {
 	private ControllerCustom controller;
 
-	private final int SCALE = 1;
-	private final int FRAME_WIDTH = 480 * SCALE;
-	private final int FRAME_HIGHT = 320 * SCALE;
-	private final int MENU_WIDTH = 60 * SCALE;
-	private final int MENU_BUTTON_SIZE = 50 * SCALE;
-	private final int MENU_BUTTON_BORDER = 10 * SCALE;
+	private final int FRAME_WIDTH = Constants.FRAME_WIDTH;
+	private final int FRAME_HIGHT = Constants.FRAME_HIGHT;
+	private final int MENU_WIDTH = Constants.MENU_WIDTH;
+	private final int MENU_BUTTON_SIZE = Constants.MENU_BUTTON_SIZE;
+	private final int MENU_BUTTON_BORDER = Constants.MENU_BUTTON_BORDER;
 
 	private Wohnung wohnung;
 
