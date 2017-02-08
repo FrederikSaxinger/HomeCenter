@@ -144,7 +144,7 @@ public class HomeCenterFrame extends JFrame {
 		ImageIcon light_off = new ImageIcon("resources/light_off_50.png");
 		lightMenuButton.setIcon(light_off);
 		lightMenuButton.setSelectedIcon(light_on);
-		lightMenuButton.setBounds(MENU_BUTTON_BORDER, MENU_BUTTON_BORDER * 3, MENU_BUTTON_SIZE, MENU_BUTTON_SIZE);
+		lightMenuButton.setBounds(MENU_BUTTON_BORDER, MENU_BUTTON_BORDER * 2, MENU_BUTTON_SIZE, MENU_BUTTON_SIZE);
 		lightMenuButton.addMouseListener(new MouseListener() {
 
 			@Override
@@ -187,7 +187,7 @@ public class HomeCenterFrame extends JFrame {
 		ImageIcon sensor_on = new ImageIcon("resources/motion_sensor_on_50.png");
 		sensorMenuButton.setIcon(sensor_off);
 		sensorMenuButton.setSelectedIcon(sensor_on);
-		sensorMenuButton.setBounds(MENU_BUTTON_BORDER, (5 * MENU_BUTTON_BORDER + MENU_BUTTON_SIZE), MENU_BUTTON_SIZE,
+		sensorMenuButton.setBounds(MENU_BUTTON_BORDER, (4 * MENU_BUTTON_BORDER + MENU_BUTTON_SIZE), MENU_BUTTON_SIZE,
 				MENU_BUTTON_SIZE);
 		sensorMenuButton.addMouseListener(new MouseListener() {
 
@@ -230,7 +230,7 @@ public class HomeCenterFrame extends JFrame {
 		ImageIcon grundriss_off = new ImageIcon("resources/grundriss_off_50.png");
 		grundrissMenuButton.setIcon(grundriss_off);
 		grundrissMenuButton.setSelectedIcon(grundriss_on);
-		grundrissMenuButton.setBounds(MENU_BUTTON_BORDER, (7 * MENU_BUTTON_BORDER + 2 * MENU_BUTTON_SIZE),
+		grundrissMenuButton.setBounds(MENU_BUTTON_BORDER, (6 * MENU_BUTTON_BORDER + 2 * MENU_BUTTON_SIZE),
 				MENU_BUTTON_SIZE, MENU_BUTTON_SIZE);
 		grundrissMenuButton.addMouseListener(new MouseListener() {
 

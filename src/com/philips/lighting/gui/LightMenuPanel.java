@@ -96,8 +96,10 @@ public class LightMenuPanel extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (focus != null) {
-					brightness = e.getX();
+					brightness = e.getX() / (3 * FIELD_SIZE + 2 * FIELD_BORDER_HORIZONTAL) * 255;
+					System.out.println(brightness);
 					repaint();
+					System.out.println("repaint Regler");
 				}
 			}
 		});
@@ -124,12 +126,9 @@ public class LightMenuPanel extends JPanel {
 			g.fillRect(focus.fieldCoord.x, focus.fieldCoord.y + FIELD_SIZE, FIELD_SIZE,
 					FIELD_BORDER_VERTICAL + FRAME_BORDER_VERTICAL);
 			g.setColor(Color.WHITE);
-			// g.fillRect(FRAME_BORDER_HORIZONTAL + ICON_BORDER,
-			// 2 * FRAME_BORDER_VERTICAL + 1 * FIELD_SIZE + 1 *
-			// FIELD_BORDER_VERTICAL + ICON_BORDER, (brightness),
-			// FIELD_SIZE - 2 * ICON_BORDER - 2 * FRAME_BORDER_VERTICAL);
-			g.fillRect(FRAME_BORDER_HORIZONTAL,
-					2 * FRAME_BORDER_VERTICAL + 1 * FIELD_SIZE + 1 * FIELD_BORDER_VERTICAL + ICON_BORDER, (brightness),
+			g.fillRect(FRAME_BORDER_HORIZONTAL + ICON_BORDER,
+					2 * FRAME_BORDER_VERTICAL + 1 * FIELD_SIZE + 1 * FIELD_BORDER_VERTICAL + ICON_BORDER,
+					2 * FIELD_BORDER_HORIZONTAL + 3 * FIELD_SIZE - 2 * ICON_BORDER,
 					FIELD_SIZE - 2 * ICON_BORDER - 2 * FRAME_BORDER_VERTICAL);
 		} else {
 			g.setColor(passiv);

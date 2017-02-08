@@ -150,7 +150,7 @@ public class DesktopView extends JFrame {
 
 		mainPanel.add(grundrissAnsichtButton, " 5, 9");
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setPreferredSize(new Dimension(480, 320));
 
 		// getContentPane().add(new JLabel(" An example Java/Swing Desktop
@@ -161,7 +161,7 @@ public class DesktopView extends JFrame {
 		// 4. Size the frame.
 		pack();
 		setLocationRelativeTo(null); // Centre the window.
-		setVisible(true);
+		// setVisible(true);
 	}
 
 	public void setController(Controller controller) {
