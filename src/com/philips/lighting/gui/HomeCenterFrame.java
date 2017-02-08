@@ -30,9 +30,6 @@ public class HomeCenterFrame extends JFrame {
 
 	private StateUpdater stateUpdater;
 
-	// private ImageIcon motionSensorIcon;
-	// private ImageIcon motionSensorClickedIcon;
-
 	private final int FRAME_WIDTH = Constants.FRAME_WIDTH;
 	private final int FRAME_HIGHT = Constants.FRAME_HIGHT;
 	private final int MENU_WIDTH = Constants.MENU_WIDTH;
@@ -51,8 +48,6 @@ public class HomeCenterFrame extends JFrame {
 
 	public HomeCenterFrame(Wohnung wohnung) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setUndecorated(true);
-		setResizable(false);
 
 		this.wohnung = wohnung;
 		this.controller = wohnung.getController();
@@ -116,6 +111,9 @@ public class HomeCenterFrame extends JFrame {
 			Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(cursorImg, new Point(0, 0),
 					"blank cursor");
 			getContentPane().setCursor(blankCursor);
+			setAlwaysOnTop(true);
+			setUndecorated(true);
+			setResizable(false);
 		} else {
 			setLocationRelativeTo(null); // Centre the window.
 			setAlwaysOnTop(true);
