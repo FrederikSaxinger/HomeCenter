@@ -12,9 +12,13 @@ public class Light {
 	public Boolean lightOn;
 
 	public Light(List<PHLight> phlights, int cachId, int lightId) {
-		this.phlight = phlights.get(cachId);
 		this.cacheId = cachId;
 		this.lightId = lightId;
-		this.lightOn = phlight.getLastKnownLightState().isOn();
+		if (phlights != null) {
+			this.lightOn = phlight.getLastKnownLightState().isOn();
+			this.phlight = phlights.get(cachId);
+		} else {
+			this.lightOn = false;
+		}
 	}
 }

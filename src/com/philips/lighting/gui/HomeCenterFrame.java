@@ -66,7 +66,9 @@ public class HomeCenterFrame extends JFrame {
 		lightPanel = new LightMenuPanel(controller, wohnung);
 		lightPanel.setPreferredSize(new Dimension((FRAME_WIDTH - MENU_WIDTH), FRAME_HIGHT));
 		lightPanel.setLocation(MENU_WIDTH, 0);
-		controller.setLightPanel(lightPanel);
+		if (controller != null) {
+			controller.setLightPanel(lightPanel);
+		}
 		menuPanel.add(lightPanel);
 
 		// initializing sensor panel
@@ -121,7 +123,9 @@ public class HomeCenterFrame extends JFrame {
 
 		setVisible(true);
 
-		stateUpdater = new StateUpdater(controller, wohnung, menuPanel);
+		if (controller != null) {
+			stateUpdater = new StateUpdater(controller, wohnung, menuPanel);
+		}
 	}
 
 	private void setUpMenuButton(JButton button) {

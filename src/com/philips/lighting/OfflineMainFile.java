@@ -1,9 +1,7 @@
 package com.philips.lighting;
 
-import com.philips.lighting.data.HueProperties;
-import com.philips.lighting.gui.DesktopView;
-import com.philips.lighting.gui.OfflineFrame;
-import com.philips.lighting.hue.sdk.PHHueSDK;
+import com.philips.lighting.data.Wohnung;
+import com.philips.lighting.gui.HomeCenterFrame;
 
 /**
  * HueDesktop.java An example Java/Swing Desktop application illustrating how to
@@ -19,13 +17,15 @@ import com.philips.lighting.hue.sdk.PHHueSDK;
 class OfflineMainFile {
 
 	public static void main(String args[]) {
-		new OfflineMainFile();
+		// new OfflineMainFile();
+		Wohnung wohnung = new Wohnung(null);
+		HomeCenterFrame frame = new HomeCenterFrame(wohnung);
 	}
 
 	public OfflineMainFile() {
 
 		// Set Up the View (A JFrame, MenuBar and Console).
-		OfflineFrame desktopView = new OfflineFrame(null);
+		// OfflineFrame desktopView = new OfflineFrame(null);
 
 	}
 

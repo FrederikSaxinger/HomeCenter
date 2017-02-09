@@ -50,7 +50,7 @@ public class LightMenuPanel extends JPanel {
 	private JButton button5;
 	private JButton button6;
 
-	private int brightness;
+	private double brightness;
 	private Room focus = null;
 	private JPanel reglerPanel;
 
@@ -96,7 +96,7 @@ public class LightMenuPanel extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (focus != null) {
-					brightness = e.getX() / (3 * FIELD_SIZE + 2 * FIELD_BORDER_HORIZONTAL) * 255;
+					brightness = ((double) e.getX()) / (3 * FIELD_SIZE + 2 * FIELD_BORDER_HORIZONTAL) * 255.;
 					System.out.println(brightness);
 					repaint();
 					System.out.println("repaint Regler");
@@ -126,9 +126,18 @@ public class LightMenuPanel extends JPanel {
 			g.fillRect(focus.fieldCoord.x, focus.fieldCoord.y + FIELD_SIZE, FIELD_SIZE,
 					FIELD_BORDER_VERTICAL + FRAME_BORDER_VERTICAL);
 			g.setColor(Color.WHITE);
+			int reglerbreite = (int) (FIELD_BORDER_HORIZONTAL / 2. + 3. * FIELD_SIZE / 4. - ICON_BORDER / 2.);
+			System.out.println(reglerbreite);
+			if (brightness < 64) {
+			} else if (brightness < 128) {
+				reglerbreite *= 2;
+			} else if (brightness < 192) {
+				reglerbreite *= 3;
+			} else {
+				reglerbreite *= 4;
+			}
 			g.fillRect(FRAME_BORDER_HORIZONTAL + ICON_BORDER,
-					2 * FRAME_BORDER_VERTICAL + 1 * FIELD_SIZE + 1 * FIELD_BORDER_VERTICAL + ICON_BORDER,
-					2 * FIELD_BORDER_HORIZONTAL + 3 * FIELD_SIZE - 2 * ICON_BORDER,
+					2 * FRAME_BORDER_VERTICAL + 1 * FIELD_SIZE + 1 * FIELD_BORDER_VERTICAL + ICON_BORDER, reglerbreite,
 					FIELD_SIZE - 2 * ICON_BORDER - 2 * FRAME_BORDER_VERTICAL);
 		} else {
 			g.setColor(passiv);
@@ -174,30 +183,30 @@ public class LightMenuPanel extends JPanel {
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				if (raspberry) {
-					if (room.light.lightOn == true) {
-						focus = null;
-					} else {
-						focus = room;
-					}
-					controller.switchLight(room);
-					repaint();
-
-				}
 			}
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (!raspberry) {
-					if (room.light.lightOn == true) {
-						focus = null;
+				if (room.light.lightOn == false) {
+					focus = room;
+					if (controller != null) {
+						controller.switchLight(room);
 					} else {
-						focus = room;
+						room.light.lightOn = !room.light.lightOn;
 					}
-					controller.switchLight(room);
-					repaint();
+				} else if (focus == room) {
+					focus = null;
+					if (controller != null) {
+						controller.switchLight(room);
+					} else {
+						room.light.lightOn = !room.light.lightOn;
+					}
 
+				} else if (room.light.lightOn == true) {
+					focus = room;
 				}
+				repaint();
+				System.out.println("Repaint wegen licht in " + room.name);
 			}
 		});
 		add(button);

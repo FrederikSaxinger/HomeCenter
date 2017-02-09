@@ -49,8 +49,10 @@ public class Wohnung {
 		motionSensorIcon = new ImageIcon("resources/motion_sensor.png");
 		motionSensorClickedIcon = new ImageIcon("resources/motion_sensor_clicked.png");
 
-		sensors = controller.getCache().getAllSensors();
-		lights = controller.getCache().getAllLights();
+		if (controller != null) {
+			sensors = controller.getCache().getAllSensors();
+			lights = controller.getCache().getAllLights();
+		}
 
 		// initialize rooms
 		initializeFlur();
