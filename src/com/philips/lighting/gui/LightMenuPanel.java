@@ -48,6 +48,7 @@ public class LightMenuPanel extends JPanel {
 	private double brightness;
 	private Room focus = null;
 	private JPanel reglerPanel;
+	boolean reglerclicked = false;
 
 	public LightMenuPanel(ControllerCustom controller, Wohnung wohnung) {
 		this.controller = controller;
@@ -90,11 +91,13 @@ public class LightMenuPanel extends JPanel {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				System.out.println("mouseClicked on reglerPanel");
 				if (focus != null) {
 					brightness = ((double) e.getX()) / (3 * FIELD_SIZE + 2 * FIELD_BORDER_HORIZONTAL) * 255.;
 					System.out.println(brightness);
 					repaint();
 					System.out.println("repaint Regler");
+					reglerclicked = true;
 				}
 			}
 		});
@@ -130,27 +133,30 @@ public class LightMenuPanel extends JPanel {
 			g.fillRect(FRAME_BORDER_HORIZONTAL, 2 * FRAME_BORDER_VERTICAL + 1 * FIELD_SIZE + 1 * FIELD_BORDER_VERTICAL,
 					3 * FIELD_SIZE + 2 * FIELD_BORDER_HORIZONTAL, FIELD_SIZE - 2 * FRAME_BORDER_VERTICAL);
 
-			int brightnessStep = 0;
-			g.setColor(Color.WHITE);
-			int reglerbreite = (int) (FIELD_BORDER_HORIZONTAL / 2. + 3. * FIELD_SIZE / 4. - ICON_BORDER / 2.);
-			System.out.println(reglerbreite);
-			if (brightness < 64) {
-				brightnessStep = 64;
-			} else if (brightness < 128) {
-				reglerbreite *= 2;
-				brightnessStep = 128;
-			} else if (brightness < 192) {
-				reglerbreite *= 3;
-				brightnessStep = 192;
-			} else {
-				reglerbreite *= 4;
-				brightnessStep = 255;
-			}
-			g.fillRect(FRAME_BORDER_HORIZONTAL + ICON_BORDER,
-					2 * FRAME_BORDER_VERTICAL + 1 * FIELD_SIZE + 1 * FIELD_BORDER_VERTICAL + ICON_BORDER, reglerbreite,
-					FIELD_SIZE - 2 * ICON_BORDER - 2 * FRAME_BORDER_VERTICAL);
+			if (reglerclicked == true) {
+				reglerclicked = false;
+				int brightnessStep = 0;
+				g.setColor(Color.WHITE);
+				int reglerbreite = (int) (FIELD_BORDER_HORIZONTAL / 2. + 3. * FIELD_SIZE / 4. - ICON_BORDER / 2.);
+				System.out.println(reglerbreite);
+				if (brightness < 64) {
+					brightnessStep = 64;
+				} else if (brightness < 128) {
+					reglerbreite *= 2;
+					brightnessStep = 128;
+				} else if (brightness < 192) {
+					reglerbreite *= 3;
+					brightnessStep = 192;
+				} else {
+					reglerbreite *= 4;
+					brightnessStep = 255;
+				}
+				g.fillRect(FRAME_BORDER_HORIZONTAL + ICON_BORDER,
+						2 * FRAME_BORDER_VERTICAL + 1 * FIELD_SIZE + 1 * FIELD_BORDER_VERTICAL + ICON_BORDER,
+						reglerbreite, FIELD_SIZE - 2 * ICON_BORDER - 2 * FRAME_BORDER_VERTICAL);
 
-			controller.setLightBrightness(focus, brightnessStep);
+				controller.setLightBrightness(focus, brightnessStep);
+			}
 		} else {
 			g.setColor(passiv);
 			g.fillRect(FRAME_BORDER_HORIZONTAL, 2 * FRAME_BORDER_VERTICAL + 1 * FIELD_SIZE + 1 * FIELD_BORDER_VERTICAL,
