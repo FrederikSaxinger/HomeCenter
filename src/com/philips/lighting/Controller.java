@@ -7,11 +7,8 @@ import javax.swing.JDialog;
 
 import com.philips.lighting.data.HueProperties;
 import com.philips.lighting.data.Wohnung;
-import com.philips.lighting.gui.AccessPointList;
 import com.philips.lighting.gui.DesktopView;
 import com.philips.lighting.gui.HomeCenterFrame;
-import com.philips.lighting.gui.LightColoursFrame;
-import com.philips.lighting.gui.PushLinkFrame;
 import com.philips.lighting.hue.sdk.PHAccessPoint;
 import com.philips.lighting.hue.sdk.PHBridgeSearchManager;
 import com.philips.lighting.hue.sdk.PHHueSDK;
@@ -23,6 +20,10 @@ import com.philips.lighting.model.PHHueError;
 import com.philips.lighting.model.PHHueParsingError;
 import com.philips.lighting.model.PHLight;
 import com.philips.lighting.model.PHLightState;
+
+import PhilipsSDKZeugs.AccessPointList;
+import PhilipsSDKZeugs.LightColoursFrame;
+import PhilipsSDKZeugs.PushLinkFrame;
 
 public class Controller {
 
@@ -99,8 +100,8 @@ public class Controller {
 			// dies starten den custom frame automatisch bei aktiver verbindung
 			ControllerCustom controllerCostum = new ControllerCustom();
 			Wohnung wohnung = new Wohnung(controllerCostum);
-			HomeCenterFrame grundrissFrame = new HomeCenterFrame(wohnung);
-			grundrissFrame.getMenuPanel().setController(controllerCostum);
+			HomeCenterFrame homeCenterFrame = new HomeCenterFrame(wohnung);
+			homeCenterFrame.getMenuPanel().setController(controllerCostum);
 		}
 
 		@Override

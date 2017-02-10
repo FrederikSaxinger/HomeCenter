@@ -1,4 +1,4 @@
-package com.philips.lighting.gui;
+package PhilipsSDKZeugs;
 
 import java.awt.BorderLayout;
 import java.awt.Font;

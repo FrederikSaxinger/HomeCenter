@@ -19,6 +19,7 @@ class OfflineMainFile {
 	public static void main(String args[]) {
 		// new OfflineMainFile();
 		Wohnung wohnung = new Wohnung(null);
+		@SuppressWarnings("unused")
 		HomeCenterFrame frame = new HomeCenterFrame(wohnung);
 	}
 

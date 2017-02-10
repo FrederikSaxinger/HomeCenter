@@ -15,8 +15,9 @@ public class Light {
 		this.cacheId = cachId;
 		this.lightId = lightId;
 		if (phlights != null) {
-			this.lightOn = phlight.getLastKnownLightState().isOn();
 			this.phlight = phlights.get(cachId);
+			this.lightOn = phlight.getLastKnownLightState().isOn();
+
 		} else {
 			this.lightOn = false;
 		}

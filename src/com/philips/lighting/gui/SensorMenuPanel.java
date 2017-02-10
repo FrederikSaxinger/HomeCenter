@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 public class SensorMenuPanel extends JPanel {
+	private static final long serialVersionUID = -8384979822638777947L;
 	private static final int PREF_W = 924;
 	private static final int PREF_H = 600;
 

@@ -14,8 +14,6 @@ public class ControllerCustom {
 	private LightMenuPanel lightPanel;
 
 	private PHHueSDK phHueSDK;
-	private static final int MAX_HUE = 65535;
-	private ControllerCustom instance;
 
 	private String username;
 	private String bridgeIP;
@@ -25,7 +23,6 @@ public class ControllerCustom {
 
 	public ControllerCustom() {
 		this.phHueSDK = PHHueSDK.getInstance();
-		this.instance = this;
 
 		this.lightPanel = null;
 

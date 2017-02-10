@@ -28,6 +28,7 @@ public class HomeCenterFrame extends JFrame {
 	private MenuPanel menuPanel;
 	private ControllerCustom controller;
 
+	@SuppressWarnings("unused")
 	private StateUpdater stateUpdater;
 
 	private final int FRAME_WIDTH = Constants.FRAME_WIDTH;

@@ -14,17 +14,15 @@ import javax.swing.border.Border;
 import com.philips.lighting.ControllerCustom;
 import com.philips.lighting.data.Constants;
 import com.philips.lighting.data.Room;
-import com.philips.lighting.data.StateUpdater;
 import com.philips.lighting.data.Wohnung;
 
 public class LightMenuPanel extends JPanel {
-	private final Boolean raspberry = false;
+	private static final long serialVersionUID = 4910078256877368167L;
 
 	private final int FRAME_WIDTH = Constants.FRAME_WIDTH;
 	private final int FRAME_HIGHT = Constants.FRAME_HIGHT;
 	private final int MENU_WIDTH = Constants.MENU_WIDTH;
 	private final int FIELD_SIZE = Constants.FIELD_SIZE;
-	private final int ICON_SIZE = Constants.ICON_SIZE;
 	private final int ICON_BORDER = Constants.ICON_BORDER;
 	final private int FIELD_BORDER_VERTICAL = Constants.FIELD_BORDER_VERTICAL;
 	final private int FRAME_BORDER_VERTICAL = Constants.FRAME_BORDER_VERTICAL;
@@ -33,15 +31,12 @@ public class LightMenuPanel extends JPanel {
 
 	private ControllerCustom controller;
 	private Wohnung wohnung;
-	private StateUpdater stateUpdater;
 
 	private Border emptyBorder;
 
 	private Color passiv = new Color(0, 71, 152, 150);
 	private Color aktiv = new Color(0, 100, 200, 150);
 	private Color background = new Color(0, 25, 51, 255);
-	private Color blaugrau = new Color(102, 143, 175, 100);
-	private Color blaugrau2 = new Color(55, 90, 118, 255);
 
 	private JButton button1;
 	private JButton button2;
