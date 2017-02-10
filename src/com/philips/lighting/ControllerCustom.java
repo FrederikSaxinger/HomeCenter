@@ -123,6 +123,21 @@ public class ControllerCustom {
 		bridge.doHTTPGet(url, switchListener);
 	}
 
+	public void setLightBrightness(Room room, int brightness) {
+		String url = "http://" + bridgeIP + "/api/" + username + "/lights/" + room.light.lightId + "/state";
+		String json = "{\"on\": true, \"bri\": " + brightness + "}";
+
+		PHHTTPListener switchListener = new PHHTTPListener() {
+
+			@Override
+			public void onHTTPResponse(String jsonResponse) {
+				System.out.println("regler hat verstellt");
+			}
+		};
+
+		bridge.doHTTPPut(url, json, switchListener);
+	}
+
 	public PHBridgeResourcesCache getCache() {
 		return cache;
 	}

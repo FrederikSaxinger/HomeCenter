@@ -116,24 +116,41 @@ public class LightMenuPanel extends JPanel {
 
 		if (focus != null) {
 			g.setColor(aktiv);
+
+			// Verbindungsrect
+			if (focus.fieldCoord.y == FRAME_BORDER_VERTICAL) {
+				g.fillRect(focus.fieldCoord.x, focus.fieldCoord.y + FIELD_SIZE, FIELD_SIZE,
+						FIELD_BORDER_VERTICAL + FRAME_BORDER_VERTICAL);
+			} else {
+				g.fillRect(focus.fieldCoord.x, focus.fieldCoord.y - FIELD_BORDER_VERTICAL - FRAME_BORDER_VERTICAL,
+						FIELD_SIZE, FIELD_BORDER_VERTICAL + FRAME_BORDER_VERTICAL);
+			}
+
+			// Regler:
 			g.fillRect(FRAME_BORDER_HORIZONTAL, 2 * FRAME_BORDER_VERTICAL + 1 * FIELD_SIZE + 1 * FIELD_BORDER_VERTICAL,
 					3 * FIELD_SIZE + 2 * FIELD_BORDER_HORIZONTAL, FIELD_SIZE - 2 * FRAME_BORDER_VERTICAL);
-			g.fillRect(focus.fieldCoord.x, focus.fieldCoord.y + FIELD_SIZE, FIELD_SIZE,
-					FIELD_BORDER_VERTICAL + FRAME_BORDER_VERTICAL);
+
+			int brightnessStep = 0;
 			g.setColor(Color.WHITE);
 			int reglerbreite = (int) (FIELD_BORDER_HORIZONTAL / 2. + 3. * FIELD_SIZE / 4. - ICON_BORDER / 2.);
 			System.out.println(reglerbreite);
 			if (brightness < 64) {
+				brightnessStep = 64;
 			} else if (brightness < 128) {
 				reglerbreite *= 2;
+				brightnessStep = 128;
 			} else if (brightness < 192) {
 				reglerbreite *= 3;
+				brightnessStep = 192;
 			} else {
 				reglerbreite *= 4;
+				brightnessStep = 255;
 			}
 			g.fillRect(FRAME_BORDER_HORIZONTAL + ICON_BORDER,
 					2 * FRAME_BORDER_VERTICAL + 1 * FIELD_SIZE + 1 * FIELD_BORDER_VERTICAL + ICON_BORDER, reglerbreite,
 					FIELD_SIZE - 2 * ICON_BORDER - 2 * FRAME_BORDER_VERTICAL);
+
+			controller.setLightBrightness(focus, brightnessStep);
 		} else {
 			g.setColor(passiv);
 			g.fillRect(FRAME_BORDER_HORIZONTAL, 2 * FRAME_BORDER_VERTICAL + 1 * FIELD_SIZE + 1 * FIELD_BORDER_VERTICAL,

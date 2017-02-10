@@ -2,6 +2,7 @@ package com.philips.lighting.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 
 import javax.swing.JPanel;
@@ -28,10 +29,9 @@ public class SensorMenuPanel extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		Color sidebar = new Color(0, 51, 102, 255);
-
-		g.setColor(sidebar);
-		g.fillRect(10, 110, 50, 50);
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("Arial", Font.BOLD, 30));
+		g.drawString("UNDER CONSTRUCTION", 100, 100);
 
 	}
 }
