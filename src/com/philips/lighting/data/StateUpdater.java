@@ -61,7 +61,7 @@ public class StateUpdater {
 	public void updateLightsOn() {
 		for (Room room : rooms) {
 			newstate = lights.get(room.light.cacheId).getLastKnownLightState().isOn();
-			if (newstate != room.light.lightOn) {
+			if (newstate != room.light.isOn) {
 				controller.getLightState(room);
 			}
 		}

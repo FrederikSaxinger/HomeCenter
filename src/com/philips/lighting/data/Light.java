@@ -9,17 +9,21 @@ public class Light {
 	public PHLight phlight;
 	public int cacheId;
 	public int lightId;
-	public Boolean lightOn;
+	public Boolean isOn;
+	public int brightness;
+	public int reglerbreite;
 
 	public Light(List<PHLight> phlights, int cachId, int lightId) {
 		this.cacheId = cachId;
 		this.lightId = lightId;
+		this.brightness = 254;
+		this.reglerbreite = Constants.REGLER_BREITE_INNEN;
 		if (phlights != null) {
 			this.phlight = phlights.get(cachId);
-			this.lightOn = phlight.getLastKnownLightState().isOn();
+			this.isOn = phlight.getLastKnownLightState().isOn();
 
 		} else {
-			this.lightOn = false;
+			this.isOn = false;
 		}
 	}
 }

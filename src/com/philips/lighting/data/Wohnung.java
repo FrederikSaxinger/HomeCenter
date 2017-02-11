@@ -83,7 +83,7 @@ public class Wohnung {
 	}
 
 	public void switchLightOnState(Room room) {
-		room.light.lightOn = !room.light.lightOn;
+		room.light.isOn = !room.light.isOn;
 	}
 
 	public Room getFlur() {

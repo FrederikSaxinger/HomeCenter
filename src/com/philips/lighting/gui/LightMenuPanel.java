@@ -45,10 +45,11 @@ public class LightMenuPanel extends JPanel {
 	private JButton button5;
 	private JButton button6;
 
-	private double brightness;
+	private int brightness;
 	private Room focus = null;
 	private JPanel reglerPanel;
 	boolean reglerclicked = false;
+	private Double reglerProzent;
 
 	public LightMenuPanel(ControllerCustom controller, Wohnung wohnung) {
 		this.controller = controller;
@@ -67,10 +68,9 @@ public class LightMenuPanel extends JPanel {
 		initializeButton(button6, wohnung.getAbstellkammerl());
 
 		reglerPanel = new JPanel();
-		// reglerPanel.setBackground(passiv);
-		reglerPanel.setBounds(FRAME_BORDER_HORIZONTAL,
-				FRAME_BORDER_VERTICAL + 1 * FIELD_BORDER_VERTICAL + 1 * FIELD_SIZE,
-				3 * FIELD_SIZE + 2 * FIELD_BORDER_HORIZONTAL, FIELD_SIZE);
+		reglerPanel.setBounds(FRAME_BORDER_HORIZONTAL + ICON_BORDER,
+				FRAME_BORDER_VERTICAL + 1 * FIELD_BORDER_VERTICAL + 1 * FIELD_SIZE, Constants.REGLER_BREITE_INNEN,
+				FIELD_SIZE);
 		reglerPanel.setOpaque(false);
 		reglerPanel.addMouseListener(new MouseListener() {
 			@Override
@@ -93,8 +93,9 @@ public class LightMenuPanel extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("mouseClicked on reglerPanel");
 				if (focus != null) {
-					brightness = ((double) e.getX()) / (3 * FIELD_SIZE + 2 * FIELD_BORDER_HORIZONTAL) * 255.;
-					System.out.println(brightness);
+					reglerProzent = (double) e.getX() / (Constants.REGLER_BREITE_INNEN);
+					Double tempBrightness = reglerProzent * 254.;
+					brightness = tempBrightness.intValue();
 					repaint();
 					System.out.println("repaint Regler");
 					reglerclicked = true;
@@ -117,55 +118,12 @@ public class LightMenuPanel extends JPanel {
 		drawFeld(g, wohnung.getAbstellkammerl());
 		drawFeld(g, wohnung.getFlur());
 
-		if (focus != null) {
-			g.setColor(aktiv);
+		drawRegler(g, focus);
 
-			// Verbindungsrect
-			if (focus.fieldCoord.y == FRAME_BORDER_VERTICAL) {
-				g.fillRect(focus.fieldCoord.x, focus.fieldCoord.y + FIELD_SIZE, FIELD_SIZE,
-						FIELD_BORDER_VERTICAL + FRAME_BORDER_VERTICAL);
-			} else {
-				g.fillRect(focus.fieldCoord.x, focus.fieldCoord.y - FIELD_BORDER_VERTICAL - FRAME_BORDER_VERTICAL,
-						FIELD_SIZE, FIELD_BORDER_VERTICAL + FRAME_BORDER_VERTICAL);
-			}
-
-			// Regler:
-			g.fillRect(FRAME_BORDER_HORIZONTAL, 2 * FRAME_BORDER_VERTICAL + 1 * FIELD_SIZE + 1 * FIELD_BORDER_VERTICAL,
-					3 * FIELD_SIZE + 2 * FIELD_BORDER_HORIZONTAL, FIELD_SIZE - 2 * FRAME_BORDER_VERTICAL);
-
-			if (reglerclicked == true) {
-				reglerclicked = false;
-				int brightnessStep = 0;
-				g.setColor(Color.WHITE);
-				int reglerbreite = (int) (FIELD_BORDER_HORIZONTAL / 2. + 3. * FIELD_SIZE / 4. - ICON_BORDER / 2.);
-				System.out.println(reglerbreite);
-				if (brightness < 64) {
-					brightnessStep = 64;
-				} else if (brightness < 128) {
-					reglerbreite *= 2;
-					brightnessStep = 128;
-				} else if (brightness < 192) {
-					reglerbreite *= 3;
-					brightnessStep = 192;
-				} else {
-					reglerbreite *= 4;
-					brightnessStep = 255;
-				}
-				g.fillRect(FRAME_BORDER_HORIZONTAL + ICON_BORDER,
-						2 * FRAME_BORDER_VERTICAL + 1 * FIELD_SIZE + 1 * FIELD_BORDER_VERTICAL + ICON_BORDER,
-						reglerbreite, FIELD_SIZE - 2 * ICON_BORDER - 2 * FRAME_BORDER_VERTICAL);
-
-				controller.setLightBrightness(focus, brightnessStep);
-			}
-		} else {
-			g.setColor(passiv);
-			g.fillRect(FRAME_BORDER_HORIZONTAL, 2 * FRAME_BORDER_VERTICAL + 1 * FIELD_SIZE + 1 * FIELD_BORDER_VERTICAL,
-					3 * FIELD_SIZE + 2 * FIELD_BORDER_HORIZONTAL, FIELD_SIZE - 2 * FRAME_BORDER_VERTICAL);
-		}
 	}
 
 	private void drawFeld(Graphics g, Room room) {
-		if (room.light.lightOn) {
+		if (room.light.isOn) {
 			g.setColor(aktiv);
 			g.fillRect((int) room.fieldCoord.getX(), (int) room.fieldCoord.getY(), FIELD_SIZE, FIELD_SIZE);
 			room.getIcon_on().paintIcon(this, g, (int) room.fieldCoord.getX() + ICON_BORDER,
@@ -205,22 +163,26 @@ public class LightMenuPanel extends JPanel {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (room.light.lightOn == false) {
+				if (room.light.isOn == false) {
 					focus = room;
 					if (controller != null) {
 						controller.switchLight(room);
+						// TODO ‰nder to switchon
+						// TODO sensor aus
 					} else {
-						room.light.lightOn = !room.light.lightOn;
+						room.light.isOn = !room.light.isOn;
 					}
-				} else if (focus == room) {
+				} else if (focus == room) { // && licht an (logik)
 					focus = null;
 					if (controller != null) {
 						controller.switchLight(room);
+						// switchoff
+						// sensor ein
 					} else {
-						room.light.lightOn = !room.light.lightOn;
+						room.light.isOn = !room.light.isOn;
 					}
 
-				} else if (room.light.lightOn == true) {
+				} else { // fall licht ein && focus aus
 					focus = room;
 				}
 				repaint();
@@ -229,4 +191,57 @@ public class LightMenuPanel extends JPanel {
 		});
 		add(button);
 	}
+
+	private void drawVerbindungen(Graphics g, Room focus) {
+		if (focus.fieldCoord.y == FRAME_BORDER_VERTICAL) {
+			g.fillRect(focus.fieldCoord.x, focus.fieldCoord.y + FIELD_SIZE, FIELD_SIZE,
+					FIELD_BORDER_VERTICAL + FRAME_BORDER_VERTICAL);
+		} else {
+			g.fillRect(focus.fieldCoord.x, focus.fieldCoord.y - FIELD_BORDER_VERTICAL - FRAME_BORDER_VERTICAL,
+					FIELD_SIZE, FIELD_BORDER_VERTICAL + FRAME_BORDER_VERTICAL);
+		}
+	}
+
+	private void drawRegler(Graphics g, Room focus) {
+		int reglerx = FRAME_BORDER_HORIZONTAL;
+		int reglery = 2 * FRAME_BORDER_VERTICAL + 1 * FIELD_SIZE + 1 * FIELD_BORDER_VERTICAL;
+		int reglerw = 3 * FIELD_SIZE + 2 * FIELD_BORDER_HORIZONTAL;
+		int reglerh = FIELD_SIZE - 2 * FRAME_BORDER_VERTICAL;
+		if (focus != null) {
+			g.setColor(aktiv);
+			drawVerbindungen(g, focus);
+
+			g.fillRect(reglerx, reglery, reglerw, reglerh);
+
+			if (reglerclicked == true) {
+				reglerclicked = false;
+				Double reglerbreiteTemp = 0.;
+				g.setColor(Color.WHITE);
+				if (reglerProzent > 0.75) {
+					reglerbreiteTemp = 1. * Constants.REGLER_BREITE_INNEN;
+					focus.light.reglerbreite = reglerbreiteTemp.intValue();
+					focus.light.brightness = 254;
+				} else {
+					reglerbreiteTemp = reglerProzent * Constants.REGLER_BREITE_INNEN;
+					focus.light.reglerbreite = reglerbreiteTemp.intValue();
+					focus.light.brightness = brightness;
+				}
+				g.fillRect(reglerx + ICON_BORDER, reglery + ICON_BORDER, focus.light.reglerbreite,
+						reglerh - 2 * ICON_BORDER);
+
+				if (controller != null) {
+					controller.setLightBrightness(focus, brightness);
+				}
+			} else {
+				g.setColor(Color.WHITE);
+				// regler weiﬂ lichtstate
+				g.fillRect(reglerx + ICON_BORDER, reglery + ICON_BORDER, focus.light.reglerbreite,
+						reglerh - 2 * ICON_BORDER);
+			}
+		} else {
+			g.setColor(passiv);
+			g.fillRect(reglerx, reglery, reglerw, reglerh);
+		}
+	}
+
 }

@@ -2,6 +2,7 @@ package com.philips.lighting;
 
 import org.json.hue.JSONObject;
 
+import com.philips.lighting.data.Constants;
 import com.philips.lighting.data.HueProperties;
 import com.philips.lighting.data.Room;
 import com.philips.lighting.gui.LightMenuPanel;
@@ -67,7 +68,7 @@ public class ControllerCustom {
 			public void onHTTPResponse(String jsonResponse) {
 				// System.out.println(room.name + " RESPONSE : " +
 				// jsonResponse);
-				room.light.lightOn = true;
+				room.light.isOn = true;
 				System.out.println("light on");
 				lightPanel.repaint();
 			}
@@ -86,7 +87,9 @@ public class ControllerCustom {
 			public void onHTTPResponse(String jsonResponse) {
 				// System.out.println(room.name + " RESPONSE : " +
 				// jsonResponse);
-				room.light.lightOn = false;
+				room.light.isOn = false;
+				room.light.brightness = 254;
+				room.light.reglerbreite = Constants.REGLER_BREITE_INNEN;
 				System.out.println("light off");
 				lightPanel.repaint();
 				bridge.updateLight(room.light.phlight, null);
@@ -97,7 +100,7 @@ public class ControllerCustom {
 	}
 
 	public void switchLight(Room room) {
-		boolean on = room.light.lightOn;
+		boolean on = room.light.isOn;
 		if (on) {
 			switchOffLight(room);
 		} else {
@@ -114,7 +117,7 @@ public class ControllerCustom {
 				JSONObject object = new JSONObject(jsonResponse);
 				object = object.getJSONObject("state");
 				Boolean lightstate = object.get("on").toString() == "true";
-				room.light.lightOn = lightstate;
+				room.light.isOn = lightstate;
 				lightPanel.repaint();
 				System.out.println("GUI updaten - Verursacher: " + room.name);
 			}
