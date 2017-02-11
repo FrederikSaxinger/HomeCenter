@@ -3,6 +3,7 @@ package com.philips.lighting.data;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -32,8 +33,10 @@ public class Wohnung {
 	private Room eingang;
 	private Room abstellkammerl;
 
-	final private int masterX = 100;
-	final private int masterY = 25;
+	private List<Room> rooms;
+
+	final private int masterX = -10;
+	final private int masterY = -10;
 	final private int sensorButtonWidth = 50;
 	final private int sensorButtonAbstand = 100;
 
@@ -64,8 +67,13 @@ public class Wohnung {
 		initializeEingang();
 		initializeAbstellkammerl();
 
-		// String lastUsername = HueProperties.getUsername();
-		// String lastConnectedIPStr = HueProperties.getLastConnectedIP();
+		rooms = new LinkedList<Room>();
+		rooms.add(badezimmer);
+		rooms.add(wc);
+		rooms.add(schlafzimmer);
+		rooms.add(flur);
+		rooms.add(eingang);
+		rooms.add(abstellkammerl);
 	}
 
 	private void initializeSensorButton(JButton button) {
@@ -161,13 +169,6 @@ public class Wohnung {
 
 			}
 		});
-
-		// flur.sensorButton.addActionListener(new ActionListener() {
-		//
-		// public void actionPerformed(ActionEvent arg0) {
-		// controller.switchFlur();
-		// }
-		// });
 	}
 
 	private void initializeBadezimmer() {
@@ -353,6 +354,10 @@ public class Wohnung {
 
 	public ControllerCustom getController() {
 		return controller;
+	}
+
+	public List<Room> getRooms() {
+		return rooms;
 	}
 
 }

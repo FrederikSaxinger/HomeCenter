@@ -26,10 +26,15 @@ public class Room {
 	private ImageIcon icon_on;
 	private ImageIcon icon_off;
 
+	private ImageIcon icon_grund_on;
+	private ImageIcon icon_grund_off;
+
 	public Room(String name) {
 		this.name = name;
 		icon_on = new ImageIcon("resources/" + name + "_on_" + ICON_SIZE + ".png");
 		icon_off = new ImageIcon("resources/" + name + "_off_" + ICON_SIZE + ".png");
+		icon_grund_on = new ImageIcon("resources/" + name + "_grund_on.png");
+		icon_grund_off = new ImageIcon("resources/" + name + "_grund_off.png");
 	}
 
 	public void setFeld(int x, int y) {
@@ -44,4 +49,11 @@ public class Room {
 		return icon_off;
 	}
 
+	public ImageIcon getIcon_grund_on() {
+		return icon_grund_on;
+	}
+
+	public ImageIcon getIcon_grund_off() {
+		return icon_grund_off;
+	}
 }

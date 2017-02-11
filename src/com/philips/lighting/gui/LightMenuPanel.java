@@ -34,8 +34,8 @@ public class LightMenuPanel extends JPanel {
 
 	private Border emptyBorder;
 
-	private Color passiv = new Color(0, 71, 152, 150);
-	private Color aktiv = new Color(0, 100, 200, 150);
+	private Color passiv = new Color(0, 52, 110, 255);
+	private Color aktiv = new Color(0, 69, 139, 255);
 	private Color background = new Color(0, 25, 51, 255);
 
 	private JButton button1;
@@ -125,12 +125,14 @@ public class LightMenuPanel extends JPanel {
 	private void drawFeld(Graphics g, Room room) {
 		if (room.light.isOn) {
 			g.setColor(aktiv);
-			g.fillRect((int) room.fieldCoord.getX(), (int) room.fieldCoord.getY(), FIELD_SIZE, FIELD_SIZE);
+			// g.fillRect((int) room.fieldCoord.getX(), (int)
+			// room.fieldCoord.getY(), FIELD_SIZE, FIELD_SIZE);
+			g.fillRoundRect((int) room.fieldCoord.getX(), (int) room.fieldCoord.getY(), FIELD_SIZE, FIELD_SIZE, 20, 20);
 			room.getIcon_on().paintIcon(this, g, (int) room.fieldCoord.getX() + ICON_BORDER,
 					(int) room.fieldCoord.getY() + ICON_BORDER);
 		} else {
 			g.setColor(passiv);
-			g.fillRect((int) room.fieldCoord.getX(), (int) room.fieldCoord.getY(), FIELD_SIZE, FIELD_SIZE);
+			g.fillRoundRect((int) room.fieldCoord.getX(), (int) room.fieldCoord.getY(), FIELD_SIZE, FIELD_SIZE, 20, 20);
 			room.getIcon_off().paintIcon(this, g, (int) room.fieldCoord.getX() + ICON_BORDER,
 					(int) room.fieldCoord.getY() + ICON_BORDER);
 		}
@@ -194,11 +196,12 @@ public class LightMenuPanel extends JPanel {
 
 	private void drawVerbindungen(Graphics g, Room focus) {
 		if (focus.fieldCoord.y == FRAME_BORDER_VERTICAL) {
-			g.fillRect(focus.fieldCoord.x, focus.fieldCoord.y + FIELD_SIZE, FIELD_SIZE,
-					FIELD_BORDER_VERTICAL + FRAME_BORDER_VERTICAL);
+			g.fillRect(focus.fieldCoord.x, focus.fieldCoord.y + FIELD_SIZE - Constants.FIELD_CORNERS, FIELD_SIZE,
+					FIELD_BORDER_VERTICAL + FRAME_BORDER_VERTICAL + 2 * Constants.FIELD_CORNERS);
 		} else {
-			g.fillRect(focus.fieldCoord.x, focus.fieldCoord.y - FIELD_BORDER_VERTICAL - FRAME_BORDER_VERTICAL,
-					FIELD_SIZE, FIELD_BORDER_VERTICAL + FRAME_BORDER_VERTICAL);
+			g.fillRect(focus.fieldCoord.x,
+					focus.fieldCoord.y - FIELD_BORDER_VERTICAL - FRAME_BORDER_VERTICAL - Constants.FIELD_CORNERS,
+					FIELD_SIZE, FIELD_BORDER_VERTICAL + FRAME_BORDER_VERTICAL + 2 * Constants.FIELD_CORNERS);
 		}
 	}
 
@@ -211,7 +214,7 @@ public class LightMenuPanel extends JPanel {
 			g.setColor(aktiv);
 			drawVerbindungen(g, focus);
 
-			g.fillRect(reglerx, reglery, reglerw, reglerh);
+			g.fillRoundRect(reglerx, reglery, reglerw, reglerh, Constants.FIELD_CORNERS, Constants.FIELD_CORNERS);
 
 			if (reglerclicked == true) {
 				reglerclicked = false;
@@ -226,8 +229,8 @@ public class LightMenuPanel extends JPanel {
 					focus.light.reglerbreite = reglerbreiteTemp.intValue();
 					focus.light.brightness = brightness;
 				}
-				g.fillRect(reglerx + ICON_BORDER, reglery + ICON_BORDER, focus.light.reglerbreite,
-						reglerh - 2 * ICON_BORDER);
+				g.fillRoundRect(reglerx + ICON_BORDER, reglery + ICON_BORDER, focus.light.reglerbreite,
+						reglerh - 2 * ICON_BORDER, Constants.FIELD_CORNERS >> 1, Constants.FIELD_CORNERS >> 1);
 
 				if (controller != null) {
 					controller.setLightBrightness(focus, brightness);
@@ -235,12 +238,12 @@ public class LightMenuPanel extends JPanel {
 			} else {
 				g.setColor(Color.WHITE);
 				// regler weiß lichtstate
-				g.fillRect(reglerx + ICON_BORDER, reglery + ICON_BORDER, focus.light.reglerbreite,
-						reglerh - 2 * ICON_BORDER);
+				g.fillRoundRect(reglerx + ICON_BORDER, reglery + ICON_BORDER, focus.light.reglerbreite,
+						reglerh - 2 * ICON_BORDER, Constants.FIELD_CORNERS >> 1, Constants.FIELD_CORNERS >> 1);
 			}
 		} else {
 			g.setColor(passiv);
-			g.fillRect(reglerx, reglery, reglerw, reglerh);
+			g.fillRoundRect(reglerx, reglery, reglerw, reglerh, Constants.FIELD_CORNERS, Constants.FIELD_CORNERS);
 		}
 	}
 

@@ -15,5 +15,6 @@ public interface Constants {
 	public static final int FIELD_BORDER_HORIZONTAL = 40;
 	public static final int FRAME_BORDER_HORIZONTAL = 100;
 	public static final int REGLER_BREITE_INNEN = 2 * FIELD_BORDER_HORIZONTAL + 3 * FIELD_SIZE - 2 * ICON_BORDER;
+	public static final int FIELD_CORNERS = 20;
 
 }

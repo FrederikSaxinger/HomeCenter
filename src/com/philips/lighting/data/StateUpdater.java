@@ -1,6 +1,5 @@
 package com.philips.lighting.data;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -33,13 +32,7 @@ public class StateUpdater {
 		this.cache = PHHueSDK.getInstance().getSelectedBridge().getResourceCache();
 		this.controller = controller;
 
-		rooms = new LinkedList<Room>();
-		rooms.add(wohnung.getBadezimmer());
-		rooms.add(wohnung.getWc());
-		rooms.add(wohnung.getSchlafzimmer());
-		rooms.add(wohnung.getFlur());
-		rooms.add(wohnung.getEingang());
-		rooms.add(wohnung.getAbstellkammerl());
+		this.rooms = wohnung.getRooms();
 
 		timer = new Timer();
 

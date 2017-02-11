@@ -78,7 +78,7 @@ public class HomeCenterFrame extends JFrame {
 		sensorPanel.setLocation(MENU_WIDTH, 0);
 
 		// initializing grundriss panel
-		grundrissPanel = new GrundrissMenuPanel();
+		grundrissPanel = new GrundrissMenuPanel(controller, wohnung);
 		grundrissPanel.setPreferredSize(new Dimension((FRAME_WIDTH - MENU_WIDTH), FRAME_HIGHT));
 		grundrissPanel.setLocation(MENU_WIDTH, 0);
 
