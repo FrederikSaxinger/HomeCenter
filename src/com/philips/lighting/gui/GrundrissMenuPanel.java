@@ -25,8 +25,8 @@ public class GrundrissMenuPanel extends JPanel {
 	private ControllerCustom controller;
 	private List<Room> rooms;
 
-	private Color passiv = new Color(0, 71, 152, 150);
-	private Color aktiv = new Color(0, 100, 200, 150);
+	private Color passiv = new Color(0, 52, 110, 255);
+	private Color aktiv = new Color(0, 69, 139, 255);
 	private Color background = new Color(0, 25, 51, 255);
 
 	public GrundrissMenuPanel(ControllerCustom controller, Wohnung wohnung) {
