@@ -127,14 +127,12 @@ public class LightMenuPanel extends JPanel {
 			g.setColor(aktiv);
 			// g.fillRect((int) room.fieldCoord.getX(), (int)
 			// room.fieldCoord.getY(), FIELD_SIZE, FIELD_SIZE);
-			g.fillRoundRect((int) room.fieldCoord.getX(), (int) room.fieldCoord.getY(), FIELD_SIZE, FIELD_SIZE, 20, 20);
-			room.getIcon_on().paintIcon(this, g, (int) room.fieldCoord.getX() + ICON_BORDER,
-					(int) room.fieldCoord.getY() + ICON_BORDER);
+			g.fillRoundRect(room.fieldCoord.x, room.fieldCoord.y, FIELD_SIZE, FIELD_SIZE, 20, 20);
+			room.getIcon_on().paintIcon(this, g, room.fieldCoord.x + ICON_BORDER, room.fieldCoord.y + ICON_BORDER);
 		} else {
 			g.setColor(passiv);
-			g.fillRoundRect((int) room.fieldCoord.getX(), (int) room.fieldCoord.getY(), FIELD_SIZE, FIELD_SIZE, 20, 20);
-			room.getIcon_off().paintIcon(this, g, (int) room.fieldCoord.getX() + ICON_BORDER,
-					(int) room.fieldCoord.getY() + ICON_BORDER);
+			g.fillRoundRect(room.fieldCoord.x, room.fieldCoord.y, FIELD_SIZE, FIELD_SIZE, 20, 20);
+			room.getIcon_off().paintIcon(this, g, room.fieldCoord.x + ICON_BORDER, room.fieldCoord.y + ICON_BORDER);
 		}
 
 	}

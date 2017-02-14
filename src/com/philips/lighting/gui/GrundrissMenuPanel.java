@@ -33,7 +33,6 @@ public class GrundrissMenuPanel extends JPanel {
 		this.controller = controller;
 		this.wohnung = wohnung;
 		this.rooms = wohnung.getRooms();
-		Color background = new Color(0, 25, 51, 255);
 		this.setPreferredSize(new Dimension(Constants.FRAME_WIDTH - Constants.MENU_WIDTH, Constants.FRAME_HIGHT));
 		this.setLayout(null);
 		this.setBounds(Constants.MENU_WIDTH, 0, Constants.FRAME_WIDTH - Constants.MENU_WIDTH, Constants.FRAME_HIGHT);
