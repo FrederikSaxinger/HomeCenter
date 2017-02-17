@@ -1,5 +1,7 @@
 package com.philips.lighting;
 
+import java.awt.geom.Point2D;
+
 import org.json.hue.JSONObject;
 
 import com.philips.lighting.data.Constants;
@@ -135,6 +137,36 @@ public class ControllerCustom {
 			@Override
 			public void onHTTPResponse(String jsonResponse) {
 				System.out.println("regler hat verstellt");
+			}
+		};
+
+		bridge.doHTTPPut(url, json, switchListener);
+	}
+
+	public void setSceneWhite(String id, int lightId, int brightness, int whitness) {
+		String url = "http://" + bridgeIP + "/api/" + username + "/scenes/" + id + "/lightstates/" + lightId;
+		String json = "{\"on\": true, \"bri\": " + brightness + ",\"ct\": " + whitness + "}";
+
+		PHHTTPListener switchListener = new PHHTTPListener() {
+
+			@Override
+			public void onHTTPResponse(String jsonResponse) {
+				System.out.println(jsonResponse);
+			}
+		};
+
+		bridge.doHTTPPut(url, json, switchListener);
+	}
+
+	public void setSceneColor(String id, int lightId, int brightness, Point2D.Double color) {
+		String url = "http://" + bridgeIP + "/api/" + username + "/scenes/" + id + "/lightstates/" + lightId;
+		String json = "{\"on\": true, \"bri\": " + brightness + ",\"xy\":[" + color.getX() + "," + color.getY() + "]}";
+
+		PHHTTPListener switchListener = new PHHTTPListener() {
+
+			@Override
+			public void onHTTPResponse(String jsonResponse) {
+				System.out.println(jsonResponse);
 			}
 		};
 
