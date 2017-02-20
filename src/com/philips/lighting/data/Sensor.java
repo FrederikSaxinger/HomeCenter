@@ -8,7 +8,7 @@ public class Sensor {
 
 	public int sensorId;
 	public int battery;
-	public Boolean sensorOn;
+	public Boolean isOn;
 	public int cacheId;
 	private PHSensor phsensor;
 
@@ -17,10 +17,10 @@ public class Sensor {
 		this.sensorId = sensorId;
 		if (sensors != null) {
 			this.phsensor = sensors.get(cacheId);
-			this.sensorOn = phsensor.getBaseConfiguration().getOn();
+			this.isOn = phsensor.getBaseConfiguration().getOn();
 			this.battery = phsensor.getBaseConfiguration().getBattery();
 		} else {
-			this.sensorOn = false;
+			this.isOn = false;
 			this.battery = 0;
 		}
 	}

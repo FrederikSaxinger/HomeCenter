@@ -2,7 +2,6 @@ package com.philips.lighting.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -19,24 +18,10 @@ import com.philips.lighting.data.Wohnung;
 public class LightMenuPanel extends JPanel {
 	private static final long serialVersionUID = 4910078256877368167L;
 
-	private final int FRAME_WIDTH = Constants.FRAME_WIDTH;
-	private final int FRAME_HIGHT = Constants.FRAME_HIGHT;
-	private final int MENU_WIDTH = Constants.MENU_WIDTH;
-	private final int FIELD_SIZE = Constants.FIELD_SIZE;
-	private final int ICON_BORDER = Constants.ICON_BORDER;
-	final private int FIELD_BORDER_VERTICAL = Constants.FIELD_BORDER_VERTICAL;
-	final private int FRAME_BORDER_VERTICAL = Constants.FRAME_BORDER_VERTICAL;
-	final private int FRAME_BORDER_HORIZONTAL = Constants.FRAME_BORDER_HORIZONTAL;
-	final private int FIELD_BORDER_HORIZONTAL = Constants.FIELD_BORDER_HORIZONTAL;
-
 	private ControllerCustom controller;
 	private Wohnung wohnung;
 
 	private Border emptyBorder;
-
-	private Color passiv = new Color(0, 52, 110, 255);
-	private Color aktiv = new Color(0, 69, 139, 255);
-	private Color background = new Color(0, 25, 51, 255);
 
 	private JButton button1;
 	private JButton button2;
@@ -47,6 +32,7 @@ public class LightMenuPanel extends JPanel {
 
 	private int brightness;
 	private Room focus = null;
+	private boolean justFocused = false;
 	private JPanel reglerPanel;
 	boolean reglerclicked = false;
 	private Double reglerProzent;
@@ -55,10 +41,10 @@ public class LightMenuPanel extends JPanel {
 		this.controller = controller;
 		this.wohnung = wohnung;
 
-		this.setPreferredSize(new Dimension(FRAME_WIDTH - MENU_WIDTH, FRAME_HIGHT));
+		this.setPreferredSize(new Dimension(Constants.FRAME_WIDTH - Constants.MENU_WIDTH, Constants.FRAME_HIGHT));
 		this.setLayout(null);
-		this.setBounds(MENU_WIDTH, 0, FRAME_WIDTH - MENU_WIDTH, FRAME_HIGHT);
-		this.setBackground(background);
+		this.setBounds(Constants.MENU_WIDTH, 0, Constants.FRAME_WIDTH - Constants.MENU_WIDTH, Constants.FRAME_HIGHT);
+		this.setBackground(Constants.COLOR_BACKGROUND);
 
 		initializeButton(button1, wohnung.getFlur());
 		initializeButton(button2, wohnung.getBadezimmer());
@@ -68,9 +54,9 @@ public class LightMenuPanel extends JPanel {
 		initializeButton(button6, wohnung.getAbstellkammerl());
 
 		reglerPanel = new JPanel();
-		reglerPanel.setBounds(FRAME_BORDER_HORIZONTAL + ICON_BORDER,
-				FRAME_BORDER_VERTICAL + 1 * FIELD_BORDER_VERTICAL + 1 * FIELD_SIZE, Constants.REGLER_BREITE_INNEN,
-				FIELD_SIZE);
+		reglerPanel.setBounds(Constants.FRAME_BORDER_HORIZONTAL + Constants.ICON_BORDER,
+				Constants.FRAME_BORDER_VERTICAL + 1 * Constants.FIELD_BORDER_VERTICAL + 1 * Constants.FIELD_SIZE,
+				Constants.REGLER_BREITE_INNEN, Constants.FIELD_SIZE);
 		reglerPanel.setOpaque(false);
 		reglerPanel.addMouseListener(new MouseListener() {
 			@Override
@@ -109,7 +95,7 @@ public class LightMenuPanel extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
-		g.setFont(new Font("Arial", Font.BOLD, 15));
+		// g.setFont(new Font("Arial", Font.BOLD, 15));
 
 		drawFeld(g, wohnung.getBadezimmer());
 		drawFeld(g, wohnung.getWc());
@@ -118,28 +104,37 @@ public class LightMenuPanel extends JPanel {
 		drawFeld(g, wohnung.getAbstellkammerl());
 		drawFeld(g, wohnung.getFlur());
 
+		// focus aktualisieren
+		if (focus != null && !justFocused && !focus.light.isOn) {
+			focus = null;
+		}
+		justFocused = false;
 		drawRegler(g, focus);
 
 	}
 
 	private void drawFeld(Graphics g, Room room) {
 		if (room.light.isOn) {
-			g.setColor(aktiv);
+			g.setColor(Constants.COLOR_AKTIV_BUTTON);
 			// g.fillRect((int) room.fieldCoord.getX(), (int)
 			// room.fieldCoord.getY(), FIELD_SIZE, FIELD_SIZE);
-			g.fillRoundRect(room.fieldCoord.x, room.fieldCoord.y, FIELD_SIZE, FIELD_SIZE, 20, 20);
-			room.getIcon_on().paintIcon(this, g, room.fieldCoord.x + ICON_BORDER, room.fieldCoord.y + ICON_BORDER);
+			g.fillRoundRect(room.fieldCoord.x, room.fieldCoord.y, Constants.FIELD_SIZE, Constants.FIELD_SIZE,
+					Constants.FIELD_CORNERS, Constants.FIELD_CORNERS);
+			room.getIcon_on().paintIcon(this, g, room.fieldCoord.x + Constants.ICON_BORDER,
+					room.fieldCoord.y + Constants.ICON_BORDER);
 		} else {
-			g.setColor(passiv);
-			g.fillRoundRect(room.fieldCoord.x, room.fieldCoord.y, FIELD_SIZE, FIELD_SIZE, 20, 20);
-			room.getIcon_off().paintIcon(this, g, room.fieldCoord.x + ICON_BORDER, room.fieldCoord.y + ICON_BORDER);
+			g.setColor(Constants.COLOR_PASSIV_BUTTON);
+			g.fillRoundRect(room.fieldCoord.x, room.fieldCoord.y, Constants.FIELD_SIZE, Constants.FIELD_SIZE,
+					Constants.FIELD_CORNERS, Constants.FIELD_CORNERS);
+			room.getIcon_off().paintIcon(this, g, room.fieldCoord.x + Constants.ICON_BORDER,
+					room.fieldCoord.y + Constants.ICON_BORDER);
 		}
 
 	}
 
 	private void initializeButton(JButton button, Room room) {
 		button = new JButton();
-		button.setBounds(room.fieldCoord.x, room.fieldCoord.y, FIELD_SIZE, FIELD_SIZE);
+		button.setBounds(room.fieldCoord.x, room.fieldCoord.y, Constants.FIELD_SIZE, Constants.FIELD_SIZE);
 		button.setContentAreaFilled(false);
 		button.setBorder(emptyBorder);
 		button.setFocusable(false);
@@ -165,6 +160,7 @@ public class LightMenuPanel extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				if (room.light.isOn == false) {
 					focus = room;
+					justFocused = true;
 					if (controller != null) {
 						controller.switchLight(room);
 						// TODO änder to switchon
@@ -193,23 +189,27 @@ public class LightMenuPanel extends JPanel {
 	}
 
 	private void drawVerbindungen(Graphics g, Room focus) {
-		if (focus.fieldCoord.y == FRAME_BORDER_VERTICAL) {
-			g.fillRect(focus.fieldCoord.x, focus.fieldCoord.y + FIELD_SIZE - Constants.FIELD_CORNERS, FIELD_SIZE,
-					FIELD_BORDER_VERTICAL + FRAME_BORDER_VERTICAL + 2 * Constants.FIELD_CORNERS);
+		if (focus.fieldCoord.y == Constants.FRAME_BORDER_VERTICAL) {
+			g.fillRect(focus.fieldCoord.x, focus.fieldCoord.y + Constants.FIELD_SIZE - Constants.FIELD_CORNERS,
+					Constants.FIELD_SIZE,
+					Constants.FIELD_BORDER_VERTICAL + Constants.FRAME_BORDER_VERTICAL + 2 * Constants.FIELD_CORNERS);
 		} else {
 			g.fillRect(focus.fieldCoord.x,
-					focus.fieldCoord.y - FIELD_BORDER_VERTICAL - FRAME_BORDER_VERTICAL - Constants.FIELD_CORNERS,
-					FIELD_SIZE, FIELD_BORDER_VERTICAL + FRAME_BORDER_VERTICAL + 2 * Constants.FIELD_CORNERS);
+					focus.fieldCoord.y - Constants.FIELD_BORDER_VERTICAL - Constants.FRAME_BORDER_VERTICAL
+							- Constants.FIELD_CORNERS,
+					Constants.FIELD_SIZE,
+					Constants.FIELD_BORDER_VERTICAL + Constants.FRAME_BORDER_VERTICAL + 2 * Constants.FIELD_CORNERS);
 		}
 	}
 
 	private void drawRegler(Graphics g, Room focus) {
-		int reglerx = FRAME_BORDER_HORIZONTAL;
-		int reglery = 2 * FRAME_BORDER_VERTICAL + 1 * FIELD_SIZE + 1 * FIELD_BORDER_VERTICAL;
-		int reglerw = 3 * FIELD_SIZE + 2 * FIELD_BORDER_HORIZONTAL;
-		int reglerh = FIELD_SIZE - 2 * FRAME_BORDER_VERTICAL;
+		int reglerx = Constants.FRAME_BORDER_HORIZONTAL;
+		int reglery = 2 * Constants.FRAME_BORDER_VERTICAL + 1 * Constants.FIELD_SIZE
+				+ 1 * Constants.FIELD_BORDER_VERTICAL;
+		int reglerw = 3 * Constants.FIELD_SIZE + 2 * Constants.FIELD_BORDER_HORIZONTAL;
+		int reglerh = Constants.FIELD_SIZE - 2 * Constants.FRAME_BORDER_VERTICAL;
 		if (focus != null) {
-			g.setColor(aktiv);
+			g.setColor(Constants.COLOR_AKTIV_BUTTON);
 			drawVerbindungen(g, focus);
 
 			g.fillRoundRect(reglerx, reglery, reglerw, reglerh, Constants.FIELD_CORNERS, Constants.FIELD_CORNERS);
@@ -227,8 +227,9 @@ public class LightMenuPanel extends JPanel {
 					focus.light.reglerbreite = reglerbreiteTemp.intValue();
 					focus.light.brightness = brightness;
 				}
-				g.fillRoundRect(reglerx + ICON_BORDER, reglery + ICON_BORDER, focus.light.reglerbreite,
-						reglerh - 2 * ICON_BORDER, Constants.FIELD_CORNERS >> 1, Constants.FIELD_CORNERS >> 1);
+				g.fillRoundRect(reglerx + Constants.ICON_BORDER, reglery + Constants.ICON_BORDER,
+						focus.light.reglerbreite, reglerh - 2 * Constants.ICON_BORDER, Constants.FIELD_CORNERS >> 1,
+						Constants.FIELD_CORNERS >> 1);
 
 				if (controller != null) {
 					controller.setLightBrightness(focus, brightness);
@@ -236,11 +237,12 @@ public class LightMenuPanel extends JPanel {
 			} else {
 				g.setColor(Color.WHITE);
 				// regler weiß lichtstate
-				g.fillRoundRect(reglerx + ICON_BORDER, reglery + ICON_BORDER, focus.light.reglerbreite,
-						reglerh - 2 * ICON_BORDER, Constants.FIELD_CORNERS >> 1, Constants.FIELD_CORNERS >> 1);
+				g.fillRoundRect(reglerx + Constants.ICON_BORDER, reglery + Constants.ICON_BORDER,
+						focus.light.reglerbreite, reglerh - 2 * Constants.ICON_BORDER, Constants.FIELD_CORNERS >> 1,
+						Constants.FIELD_CORNERS >> 1);
 			}
 		} else {
-			g.setColor(passiv);
+			g.setColor(Constants.COLOR_PASSIV_BUTTON);
 			g.fillRoundRect(reglerx, reglery, reglerw, reglerh, Constants.FIELD_CORNERS, Constants.FIELD_CORNERS);
 		}
 	}

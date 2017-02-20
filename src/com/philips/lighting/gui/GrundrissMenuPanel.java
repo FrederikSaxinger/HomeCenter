@@ -25,10 +25,6 @@ public class GrundrissMenuPanel extends JPanel {
 	private ControllerCustom controller;
 	private List<Room> rooms;
 
-	private Color passiv = new Color(0, 52, 110, 255);
-	private Color aktiv = new Color(0, 69, 139, 255);
-	private Color background = new Color(0, 25, 51, 255);
-
 	public GrundrissMenuPanel(ControllerCustom controller, Wohnung wohnung) {
 		this.controller = controller;
 		this.wohnung = wohnung;
@@ -36,7 +32,7 @@ public class GrundrissMenuPanel extends JPanel {
 		this.setPreferredSize(new Dimension(Constants.FRAME_WIDTH - Constants.MENU_WIDTH, Constants.FRAME_HIGHT));
 		this.setLayout(null);
 		this.setBounds(Constants.MENU_WIDTH, 0, Constants.FRAME_WIDTH - Constants.MENU_WIDTH, Constants.FRAME_HIGHT);
-		this.setBackground(background);
+		this.setBackground(Constants.COLOR_BACKGROUND);
 
 		addMouseListener(new MouseAdapter() {
 			@Override
@@ -71,15 +67,16 @@ public class GrundrissMenuPanel extends JPanel {
 
 		drawGrundriss(g);
 
-		drawIcons(g);
+		// drawIcons(g);
+		// drawStrings(g);
 	}
 
 	private void drawRoom(Room room, Graphics g) {
 		if (room.light.isOn) {
-			g.setColor(aktiv);
+			g.setColor(Constants.COLOR_GRUNDRISS_LIGHT);
 			g.fillRect(room.X, room.Y, room.W, room.H);
 		} else {
-			g.setColor(passiv);
+			g.setColor(Constants.COLOR_PASSIV_BUTTON);
 			g.fillRect(room.X, room.Y, room.W, room.H);
 		}
 	}
@@ -166,6 +163,20 @@ public class GrundrissMenuPanel extends JPanel {
 				} else {
 					room.getIcon_grund_off().paintIcon(this, g, room.X + ((room.W - iconW) >> 1),
 							room.Y + ((room.H - iconH) >> 1));
+				}
+			}
+		}
+	}
+
+	private void drawStrings(Graphics g) {
+		for (Room room : wohnung.getRooms()) {
+			if (room.getIcon_grund_off() != null && room.getIcon_grund_on() != null) {
+				int iconH = 10;
+				int iconW = 100;
+				if (room.light.isOn) {
+					g.drawString(room.name, room.X + ((room.W - iconW) >> 1), room.Y + ((room.H - iconH) >> 1));
+				} else {
+					g.drawString(room.name, room.X + ((room.W - iconW) >> 1), room.Y + ((room.H - iconH) >> 1));
 				}
 			}
 		}

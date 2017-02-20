@@ -5,6 +5,7 @@ import java.util.Random;
 
 import javax.swing.JDialog;
 
+import com.philips.lighting.data.Constants;
 import com.philips.lighting.data.HueProperties;
 import com.philips.lighting.data.Wohnung;
 import com.philips.lighting.gui.DesktopView;
@@ -79,7 +80,7 @@ public class Controller {
 			phHueSDK.setSelectedBridge(bridge);
 			// TODO appheartbeat schreiben um cache state zu verteilen
 			// phHueSDK.enableHeartbeat(bridge, PHHueSDK.HB_INTERVAL);
-			phHueSDK.enableHeartbeat(bridge, 13000);
+			phHueSDK.enableHeartbeat(bridge, 1000 * Constants.SECONDS_HEARTBEAT);
 			// TODO nur bestimmte heartbeat verwenden
 			desktopView.getFindingBridgeProgressBar().setVisible(false);
 			String lastIpAddress = bridge.getResourceCache().getBridgeConfiguration().getIpAddress();

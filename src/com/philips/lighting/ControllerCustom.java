@@ -7,6 +7,7 @@ import org.json.hue.JSONObject;
 import com.philips.lighting.data.Constants;
 import com.philips.lighting.data.HueProperties;
 import com.philips.lighting.data.Room;
+import com.philips.lighting.gui.GrundrissMenuPanel;
 import com.philips.lighting.gui.LightMenuPanel;
 import com.philips.lighting.hue.listener.PHHTTPListener;
 import com.philips.lighting.hue.sdk.PHHueSDK;
@@ -15,6 +16,7 @@ import com.philips.lighting.model.PHBridgeResourcesCache;
 
 public class ControllerCustom {
 	private LightMenuPanel lightPanel;
+	private GrundrissMenuPanel grundrissPanel;
 
 	private PHHueSDK phHueSDK;
 
@@ -28,6 +30,7 @@ public class ControllerCustom {
 		this.phHueSDK = PHHueSDK.getInstance();
 
 		this.lightPanel = null;
+		this.grundrissPanel = null;
 
 		bridge = phHueSDK.getSelectedBridge();
 		cache = bridge.getResourceCache();
@@ -37,10 +40,11 @@ public class ControllerCustom {
 
 	}
 
+	// TODO alle consolen ausgaben überarbeiten
 	public void switchSensorState(Room room) {
 		String url = "http://" + bridgeIP + "/api/" + username + "/sensors/" + room.sensor.sensorId;
 
-		String json = "{\"on\": " + !room.sensor.sensorOn + "}";
+		String json = "{\"on\": " + !room.sensor.isOn + "}";
 		bridge.doHTTPPut(url + "/config", json, new PHHTTPListener() {
 
 			@Override
@@ -49,14 +53,12 @@ public class ControllerCustom {
 			}
 		});
 
-		room.sensor.sensorOn = !room.sensor.sensorOn;
+		room.sensor.isOn = !room.sensor.isOn;
 
-		if (room.sensor.sensorOn) {
+		if (room.sensor.isOn) {
 			switchOffLight(room);
-			room.sensorButton.setSelected(false);
 		} else {
 			switchOnLight(room);
-			room.sensorButton.setSelected(true);
 		}
 	}
 
@@ -73,6 +75,7 @@ public class ControllerCustom {
 				room.light.isOn = true;
 				System.out.println("light on");
 				lightPanel.repaint();
+				grundrissPanel.repaint();
 			}
 		};
 
@@ -94,6 +97,7 @@ public class ControllerCustom {
 				room.light.reglerbreite = Constants.REGLER_BREITE_INNEN;
 				System.out.println("light off");
 				lightPanel.repaint();
+				grundrissPanel.repaint();
 				bridge.updateLight(room.light.phlight, null);
 			}
 		};
@@ -121,6 +125,25 @@ public class ControllerCustom {
 				Boolean lightstate = object.get("on").toString() == "true";
 				room.light.isOn = lightstate;
 				lightPanel.repaint();
+				System.out.println("GUI updaten - Verursacher: " + room.name);
+			}
+		};
+
+		bridge.doHTTPGet(url, switchListener);
+	}
+
+	public void getSensorState(Room room) {
+		String url = "http://" + bridgeIP + "/api/" + username + "/sensors/" + room.sensor.sensorId;
+
+		PHHTTPListener switchListener = new PHHTTPListener() {
+			@Override
+			public void onHTTPResponse(String jsonResponse) {
+				JSONObject object = new JSONObject(jsonResponse);
+				object = object.getJSONObject("config");
+				Boolean sensorstate = object.get("on").toString() == "true";
+				room.sensor.isOn = sensorstate;
+				System.out.println("systems reports sensor in " + room.name + " is " + room.sensor.isOn);
+				grundrissPanel.repaint();
 				System.out.println("GUI updaten - Verursacher: " + room.name);
 			}
 		};
@@ -179,6 +202,10 @@ public class ControllerCustom {
 
 	public void setLightPanel(LightMenuPanel lightPanel) {
 		this.lightPanel = lightPanel;
+	}
+
+	public void setGrundrissPanel(GrundrissMenuPanel grundrissPanel) {
+		this.grundrissPanel = grundrissPanel;
 	}
 
 }

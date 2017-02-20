@@ -1,8 +1,6 @@
 package com.philips.lighting.data;
 
 import java.awt.Color;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,12 +15,6 @@ import com.philips.lighting.model.sensor.PHSensor;
 
 public class Wohnung {
 	ControllerCustom controller;
-
-	final private int FRAME_BORDER_VERTICAL = Constants.FRAME_BORDER_VERTICAL;
-	final private int FRAME_BORDER_HORIZONTAL = Constants.FRAME_BORDER_HORIZONTAL;
-	final private int FIELD_SIZE = Constants.FIELD_SIZE;
-	final private int FIELD_BORDER_VERTIACAL = Constants.FIELD_BORDER_VERTICAL;
-	final private int FIELD_BORDER_HORIZONTAL = Constants.FIELD_BORDER_HORIZONTAL;
 
 	private Room flur;
 	private Room badezimmer;
@@ -136,39 +128,7 @@ public class Wohnung {
 		flur.W = 200;
 		flur.H = 70;
 
-		flur.setFeld(FRAME_BORDER_HORIZONTAL, FRAME_BORDER_VERTICAL);
-
-		flur.sensorButtonX = 800;
-		flur.sensorButtonY = 100;
-		flur.sensorButton = new JButton();
-		flur.sensorButton.setSelected(!flur.sensor.sensorOn);
-		initializeSensorButton(flur.sensorButton);
-		flur.sensorButton.setBounds(flur.sensorButtonX, flur.sensorButtonY, sensorButtonWidth, sensorButtonWidth);
-		flur.sensorButton.removeMouseListener(flur.sensorButton.getMouseListeners()[0]);
-		flur.sensorButton.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				controller.switchSensorState(flur);
-
-			}
-		});
+		flur.setFeld(Constants.FRAME_BORDER_HORIZONTAL, Constants.FRAME_BORDER_VERTICAL);
 	}
 
 	private void initializeBadezimmer() {
@@ -181,38 +141,8 @@ public class Wohnung {
 		badezimmer.X = flur.X + flur.W - badezimmer.W;
 		badezimmer.Y = flur.Y - badezimmer.H;
 
-		badezimmer.setFeld(FRAME_BORDER_HORIZONTAL + FIELD_SIZE + FIELD_BORDER_HORIZONTAL, FRAME_BORDER_VERTICAL);
-
-		badezimmer.sensorButtonX = flur.sensorButtonX;
-		badezimmer.sensorButtonY = flur.sensorButtonY + sensorButtonAbstand;
-		badezimmer.sensorButton = new JButton();
-		initializeSensorButton(badezimmer.sensorButton);
-		badezimmer.sensorButton.setBounds(badezimmer.sensorButtonX, badezimmer.sensorButtonY, sensorButtonWidth,
-				sensorButtonWidth);
-		badezimmer.sensorButton.removeMouseListener(badezimmer.sensorButton.getMouseListeners()[0]);
-		badezimmer.sensorButton.addMouseListener(new MouseListener() {
-			@Override
-			public void mouseReleased(MouseEvent e) {
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				controller.switchSensorState(badezimmer);
-			}
-		});
-
+		badezimmer.setFeld(Constants.FRAME_BORDER_HORIZONTAL + Constants.FIELD_SIZE + Constants.FIELD_BORDER_HORIZONTAL,
+				Constants.FRAME_BORDER_VERTICAL);
 	}
 
 	private void initializeWC() {
@@ -225,38 +155,8 @@ public class Wohnung {
 		wc.X = flur.X;
 		wc.Y = badezimmer.Y + badezimmer.H - wc.H;
 
-		wc.setFeld(FRAME_BORDER_HORIZONTAL, FRAME_BORDER_VERTICAL + 2 * FIELD_SIZE + 2 * FIELD_BORDER_VERTIACAL);
-
-		wc.sensorButtonX = flur.sensorButtonX;
-		wc.sensorButtonY = flur.sensorButtonY + 2 * sensorButtonAbstand;
-		wc.sensorButton = new JButton();
-		initializeSensorButton(wc.sensorButton);
-		wc.sensorButton.setBounds(wc.sensorButtonX, wc.sensorButtonY, sensorButtonWidth, sensorButtonWidth);
-		wc.sensorButton.removeMouseListener(wc.sensorButton.getMouseListeners()[0]);
-		wc.sensorButton.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				controller.switchSensorState(wc);
-
-			}
-		});
+		wc.setFeld(Constants.FRAME_BORDER_HORIZONTAL,
+				Constants.FRAME_BORDER_VERTICAL + 2 * Constants.FIELD_SIZE + 2 * Constants.FIELD_BORDER_VERTICAL);
 	}
 
 	private void initializeSchlafzimmer() {
@@ -268,10 +168,9 @@ public class Wohnung {
 		schlafzimmer.X = flur.X;
 		schlafzimmer.Y = flur.Y + flur.H;
 
-		schlafzimmer.setFeld(FRAME_BORDER_HORIZONTAL + 2 * FIELD_SIZE + 2 * FIELD_BORDER_HORIZONTAL,
-				FRAME_BORDER_VERTICAL);
-
-		// TODO Button
+		schlafzimmer.setFeld(
+				Constants.FRAME_BORDER_HORIZONTAL + 2 * Constants.FIELD_SIZE + 2 * Constants.FIELD_BORDER_HORIZONTAL,
+				Constants.FRAME_BORDER_VERTICAL);
 	}
 
 	private void initializeWohnzimmer() {
@@ -301,40 +200,8 @@ public class Wohnung {
 		eingang.X = kueche.X - eingang.W;
 		eingang.Y = kueche.Y;
 
-		eingang.setFeld(FRAME_BORDER_HORIZONTAL + FIELD_SIZE + FIELD_BORDER_HORIZONTAL,
-				FRAME_BORDER_VERTICAL + 2 * FIELD_SIZE + 2 * FIELD_BORDER_VERTIACAL);
-
-		eingang.sensorButtonX = flur.sensorButtonX;
-		eingang.sensorButtonY = flur.sensorButtonY + 3 * sensorButtonAbstand;
-		eingang.sensorButton = new JButton();
-		initializeSensorButton(eingang.sensorButton);
-		eingang.sensorButton.setBounds(eingang.sensorButtonX, eingang.sensorButtonY, sensorButtonWidth,
-				sensorButtonWidth);
-		eingang.sensorButton.removeMouseListener(eingang.sensorButton.getMouseListeners()[0]);
-		eingang.sensorButton.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				controller.switchSensorState(eingang);
-
-			}
-		});
+		eingang.setFeld(Constants.FRAME_BORDER_HORIZONTAL + Constants.FIELD_SIZE + Constants.FIELD_BORDER_HORIZONTAL,
+				Constants.FRAME_BORDER_VERTICAL + 2 * Constants.FIELD_SIZE + 2 * Constants.FIELD_BORDER_VERTICAL);
 	}
 
 	private void initializeAbstellkammerl() {
@@ -346,10 +213,9 @@ public class Wohnung {
 		abstellkammerl.X = wohnzimmer.X;
 		abstellkammerl.Y = kueche.Y;
 
-		abstellkammerl.setFeld(FRAME_BORDER_HORIZONTAL + 2 * FIELD_SIZE + 2 * FIELD_BORDER_HORIZONTAL,
-				FRAME_BORDER_VERTICAL + 2 * FIELD_SIZE + 2 * FIELD_BORDER_VERTIACAL);
-
-		// TODO Button
+		abstellkammerl.setFeld(
+				Constants.FRAME_BORDER_HORIZONTAL + 2 * Constants.FIELD_SIZE + 2 * Constants.FIELD_BORDER_HORIZONTAL,
+				Constants.FRAME_BORDER_VERTICAL + 2 * Constants.FIELD_SIZE + 2 * Constants.FIELD_BORDER_VERTICAL);
 	}
 
 	public ControllerCustom getController() {

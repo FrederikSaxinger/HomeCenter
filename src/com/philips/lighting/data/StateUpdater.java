@@ -13,7 +13,6 @@ import com.philips.lighting.model.sensor.PHSensor;
 
 //läuft alle x sekunden und datet die wohnung ab... kein zugriff auf gui
 public class StateUpdater {
-	private int SECONDS = 7; // The delay in minutes
 	private Timer timer;
 	private TimerTask updater;
 
@@ -48,7 +47,7 @@ public class StateUpdater {
 			}
 		};
 
-		timer.schedule(updater, 0, 1000 * SECONDS);
+		timer.schedule(updater, 0, 1000 * Constants.SECONDS_STATEUPDATER);
 	}
 
 	public void updateLightsOn() {
@@ -61,12 +60,20 @@ public class StateUpdater {
 	}
 
 	public void updateSensorsOn() {
-		wohnung.getFlur().sensor.sensorOn = sensors.get(wohnung.getFlur().sensor.cacheId).getBaseConfiguration()
+		// TODO wie bei licht eine abfrage einbauen
+		for (Room room : rooms) {
+			if (room.sensor != null) {
+				newstate = sensors.get(room.sensor.cacheId).getBaseConfiguration().getOn();
+				if (newstate != room.sensor.isOn) {
+					controller.getSensorState(room);
+				}
+			}
+		}
+		wohnung.getFlur().sensor.isOn = sensors.get(wohnung.getFlur().sensor.cacheId).getBaseConfiguration().getOn();
+		wohnung.getBadezimmer().sensor.isOn = sensors.get(wohnung.getBadezimmer().sensor.cacheId).getBaseConfiguration()
 				.getOn();
-		wohnung.getBadezimmer().sensor.sensorOn = sensors.get(wohnung.getBadezimmer().sensor.cacheId)
-				.getBaseConfiguration().getOn();
-		wohnung.getWc().sensor.sensorOn = sensors.get(wohnung.getWc().sensor.cacheId).getBaseConfiguration().getOn();
-		wohnung.getEingang().sensor.sensorOn = sensors.get(wohnung.getEingang().sensor.cacheId).getBaseConfiguration()
+		wohnung.getWc().sensor.isOn = sensors.get(wohnung.getWc().sensor.cacheId).getBaseConfiguration().getOn();
+		wohnung.getEingang().sensor.isOn = sensors.get(wohnung.getEingang().sensor.cacheId).getBaseConfiguration()
 				.getOn();
 	}
 }

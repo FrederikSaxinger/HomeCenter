@@ -1,6 +1,5 @@
 package com.philips.lighting.gui;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 import javax.swing.JPanel;
@@ -14,10 +13,6 @@ public class MenuPanel extends JPanel {
 
 	@SuppressWarnings("unused")
 	private ControllerCustom controller;
-
-	private final int FRAME_HIGHT = Constants.FRAME_HIGHT;
-	private final int MENU_WIDTH = Constants.MENU_WIDTH;
-	private final int MENU_BUTTON_BORDER = Constants.MENU_BUTTON_BORDER;
 
 	@SuppressWarnings("unused")
 	private Wohnung wohnung;
@@ -33,15 +28,34 @@ public class MenuPanel extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
-		Color sidebar = new Color(0, 51, 102, 255);
-		Color backgroud = new Color(0, 25, 51, 255);
+		// g.setColor(Constants.COLOR_SIDEBAR);
+		// g.fillRect(0, 0, Constants.MENU_WIDTH, Constants.FRAME_HIGHT);
+		//
+		// g.setColor(Constants.COLOR_BACKGROUND);
+		// g.fillRect(0, Constants.MENU_BUTTON_BORDER + Constants.MENU_WIDTH *
+		// (selected - 1), Constants.MENU_WIDTH,
+		// Constants.MENU_WIDTH);
 
-		g.setColor(sidebar);
-		g.fillRect(0, 0, MENU_WIDTH, FRAME_HIGHT);
+		g.setColor(Constants.COLOR_SIDEBAR);
+		g.fillRoundRect(-Constants.FIELD_CORNERS, -Constants.FIELD_CORNERS,
+				Constants.MENU_WIDTH + Constants.FIELD_CORNERS,
+				Constants.MENU_BUTTON_BORDER + Constants.MENU_WIDTH * (selected - 1) + Constants.FIELD_CORNERS,
+				Constants.FIELD_CORNERS, Constants.FIELD_CORNERS);
 
-		g.setColor(backgroud);
-		g.fillRect(0, MENU_BUTTON_BORDER + MENU_WIDTH * (selected - 1), MENU_WIDTH, MENU_WIDTH);
+		// g.setColor(Constants.COLOR_BACKGROUND);
+		// g.fillRoundRect(0, Constants.MENU_BUTTON_BORDER +
+		// Constants.MENU_WIDTH * (selected - 1), Constants.MENU_WIDTH,
+		// Constants.MENU_WIDTH, Constants.FIELD_CORNERS,
+		// Constants.FIELD_CORNERS);
 
+		g.setColor(Constants.COLOR_SIDEBAR);
+		g.fillRoundRect(-Constants.FIELD_CORNERS,
+				Constants.MENU_BUTTON_BORDER + Constants.MENU_WIDTH * (selected - 1) + Constants.MENU_WIDTH,
+				Constants.MENU_WIDTH + Constants.FIELD_CORNERS,
+				Constants.FRAME_HIGHT
+						- (Constants.MENU_BUTTON_BORDER + Constants.MENU_WIDTH * (selected - 1) + Constants.MENU_WIDTH)
+						+ Constants.FIELD_CORNERS,
+				Constants.FIELD_CORNERS, Constants.FIELD_CORNERS);
 	}
 
 	public void setController(ControllerCustom controller) {

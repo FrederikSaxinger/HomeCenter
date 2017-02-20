@@ -3,7 +3,6 @@ package com.philips.lighting.data;
 import java.awt.Point;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 
 public class Room {
 	private final int ICON_SIZE = Constants.ICON_SIZE;
@@ -11,10 +10,6 @@ public class Room {
 	public Light light;
 	public Sensor sensor;
 	public int[] roomCoord;
-
-	public JButton sensorButton;
-	public int sensorButtonX;
-	public int sensorButtonY;
 
 	public Point fieldCoord;
 
